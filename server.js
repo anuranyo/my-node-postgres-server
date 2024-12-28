@@ -4,7 +4,7 @@ const helmet = require('helmet');
 const ngrok = require('ngrok');
 require('dotenv').config();
 
-const apiRoutes = require('./routes/api'); // Consolidated import
+const apiRoutes = require('./routes/api');
 const pool = require('./db/connection');
 
 const app = express();
