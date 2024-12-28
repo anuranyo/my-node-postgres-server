@@ -1,4 +1,4 @@
-const pool = require('../db/connection');
+const userModel = require('../models/userModel');
 
 exports.getAllUsers = async (req, res, next) => {
   try {
