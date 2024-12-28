@@ -4,10 +4,8 @@ const helmet = require('helmet');
 const ngrok = require('ngrok');
 require('dotenv').config();
 
-const userRoutes = require('./routes/users');
-const projectRoutes = require('./routes/projects');
-const errorHandler = require('./middleware/errorHandler');
-const pool = require('./db/connection'); // Подключение к базе данных
+const userRoutes = require('./routes/api');
+const pool = require('./db/connection'); 
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -26,8 +24,12 @@ app.use(
   })
 );
 
+
+
 app.use('/users', userRoutes);
 app.use('/projects', projectRoutes);
+
+
 
 // Error handling middleware
 app.use(errorHandler);
