@@ -11,6 +11,7 @@ const { getAllUserStats, getUserStatById, createUserStat, updateUserStat, delete
 const { getAllUserTaskSummaries, getUserTaskSummaryById, createUserTaskSummary, updateUserTaskSummary, deleteUserTaskSummary } = require('../controllers/userTaskSummaryController');
 const { getAllTags, getTagById, createTag, updateTag, deleteTag } = require('../controllers/tagsController');
 const { getAllSettings, getSettingById, createSetting, updateSetting, deleteSetting, } = require('../controllers/SettingsController');
+const { getAllUserTags, getUserTagById, createUserTag, updateUserTag, deleteUserTag, } = require('../controllers/userTagController');
 
 
 const router = express.Router();
@@ -98,6 +99,13 @@ router.get('/getSettingById/:id', getSettingById);
 router.post('/createSetting/', createSetting);
 router.put('/updateSetting/:id', updateSetting);
 router.delete('/deleteSetting/:id', deleteSetting);
+
+// USER TAGS ROUTES
+router.get('/getAllUserTags/', getAllUserTags);
+router.get('/getUserTagById/:id', getUserTagById);
+router.post('/createUserTag/', createUserTag);
+router.put('/updateUserTag/:id', updateUserTag);
+router.delete('/deleteUserTag/:id', deleteUserTag);
 
 //AUTH +
 const authRoutes = require('./routes/AuthRoutes');
