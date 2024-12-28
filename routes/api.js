@@ -22,9 +22,9 @@ const router = express.Router();
 // USERS ROUTES
 router.get('/getAllUsers', getAllUsers); 
 router.get('/getUserById/:id', getUserById);
-router.post('/createUser/:id', createUser);
-router.put('/updateProject/:id', updateUser);
-router.delete('/deleteProject/:id', deleteUser);
+router.post('/createUser/', createUser);
+router.put('/updateUser/:id', updateUser);
+router.delete('/deleteUser/:id', deleteUser);
 
 // TASKS ROUTES
 router.get('/getAllTasks/', getAllTasks);
