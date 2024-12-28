@@ -1,15 +1,24 @@
 const express = require('express');
-const { getAllUsers, getUserById, createProject, updateProject, deleteProject } = require('../controllers/userController');
-const { getAllLinks, getProjectById, createProject, updateProject, deleteProject } = require('../controllers/active_projects');
+const { getAllUsers, getUserById, createUser, updateUser, deleteUser } = require('../controllers/userController');
+const { getAllLinks, getLinkById, createLink, updateLink, deleteLink } = require('../controllers/linkController');
+const { getAllTasks, getTaskById, createTask, updateTask, deleteTask } = require('../controllers/TasksController');
+const { getAllJobs, getJobById, createJob, updateJob, deleteJob } = require('../controllers/JobsController');
+const { getAllProjects, getProjectById, createProject, updateProject, deleteProject } = require('../controllers/activeProjectController');
+const { getAllRequests, getRequestById, createRequest, updateRequest, deleteRequest } = require('../controllers/requestController');
+const { getAllUserContactInfos, getUserContactInfoById, createUserContactInfo, updateUserContactInfo, deleteUserContactInfo } = require('../controllers/userContactInfoController');
+const { getAllColleagues, getColleagueById, createColleague, updateColleague, deleteColleague } = require('../controllers/colleaguesController');
+const { getAllUserStats, getUserStatById, createUserStat, updateUserStat, deleteUserStat } = require('../controllers/userStatController');
+const { getAllUserTaskSummaries, getUserTaskSummaryById, createUserTaskSummary, updateUserTaskSummary, deleteUserTaskSummary } = require('../controllers/userTaskSummaryController');
+
 
 const router = express.Router();
 
 // USERS ROUTES
 router.get('/getAllUsers', getAllUsers); 
 router.get('/getUserById/:id', getUserById);
-router.post('/createProject/:id', createProject);
-router.put('/updateProject/:id', updateProject);
-router.delete('/deleteProject/:id', deleteProject);
+router.post('/createUser/:id', createUser);
+router.put('/updateProject/:id', updateUser);
+router.delete('/deleteProject/:id', deleteUser);
 
 // TASKS ROUTES
 router.get('/getAllTasks/', getAllTasks);
@@ -33,7 +42,7 @@ router.put('/updateJob/:id', updateJob);
 router.delete('/deleteJob/:id', deleteJob);
 
 //ACTIVE PROJECT ROUTES
-router.get('/getAllLinks', getAllLinks);
+router.get('/getAllProjects', getAllProjects);
 router.get('/getProjectById/:id', getProjectById);
 router.post('/createProject/', createProject);
 router.put('/updateProject/:id', updateProject);
@@ -60,7 +69,19 @@ router.post('/createColleague/', createColleague);
 router.put('/updateColleague/:id', updateColleague);
 router.delete('/deleteColleague/:id', deleteColleague);
 
+//USER STAT ROUTES
+router.get('/getAllUserStats', getAllUserStats);
+router.get('/getUserStatById/:id', getUserStatById);
+router.post('/createUserStat/', createUserStat);
+router.put('/updateUserStat/:id', updateUserStat);
+router.delete('/deleteUserStat/:id', deleteUserStat);
 
+//USER TASK SUMMARY MODEL
+router.get('/getAllUserTaskSummaries', getAllUserTaskSummaries);
+router.get('/getUserTaskSummaryById/:id', getUserTaskSummaryById);
+router.post('/createUserTaskSummary/', createUserTaskSummary);
+router.put('/updateUserTaskSummary/:id', updateUserTaskSummary);
+router.delete('/deleteUserTaskSummary/:id', deleteUserTaskSummary);
 
 
 module.exports = router;
