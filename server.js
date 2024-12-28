@@ -4,8 +4,8 @@ const helmet = require('helmet');
 const ngrok = require('ngrok');
 require('dotenv').config();
 
-const userRoutes = require('./routes/api');
-const pool = require('./db/connection'); 
+const apiRoutes = require('./routes/api'); // Consolidated import
+const pool = require('./db/connection');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,34 +24,30 @@ app.use(
   })
 );
 
-
-
-app.use('/users', userRoutes);
-app.use('/projects', projectRoutes);
-
-
+// Use /api for all routes
+app.use('/api', apiRoutes);
 
 // Error handling middleware
-app.use(errorHandler);
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Internal server error' });
+});
 
 // Функция для запуска сервера и настройки Ngrok
 const startServer = async () => {
   try {
-    // Проверяем подключение к базе данных
     await pool.query('SELECT 1');
     console.log('✅ Успешное подключение к базе данных');
 
-    // Запускаем сервер
     app.listen(PORT, async () => {
       console.log(`✅ Сервер успешно запущен на http://localhost:${PORT}`);
 
-      // Подключаем Ngrok
       const ngrokUrl = await ngrok.connect(PORT);
       console.log(`🌐 Ngrok запущен: ${ngrokUrl}`);
     });
   } catch (error) {
     console.error('❌ Ошибка подключения к базе данных или серверу:', error.message);
-    process.exit(1); // Завершаем процесс при ошибке
+    process.exit(1);
   }
 };
 
