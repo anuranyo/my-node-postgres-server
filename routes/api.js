@@ -1,6 +1,6 @@
 const express = require('express');
-const { getAllProjects } = require('../controllers/projectController');
-const { getAllUsers, getUserById } = require('../controllers/userController');
+const { getAllUsers, getUserById, createProject, updateProject, deleteProject } = require('../controllers/userController');
+const { getAllLinks, getProjectById, createProject, updateProject, deleteProject } = require('../controllers/active_projects');
 
 const router = express.Router();
 
@@ -12,7 +12,14 @@ router.get('/users/:id', updateProject);
 router.get('/users/:id', deleteProject);
 
 
-// PROJECTS ROUTES
-router.get('/projects', getAllProjects);
+//ACTIVE PROJECT ROUTES
+router.get('/active_projects', getAllLinks);
+router.get('/active_projects/:id', getProjectById);
+router.get('/active_projects/:create', createProject);
+router.get('/active_projects/:update', updateProject);
+router.get('/active_projects/:delete', deleteProject);
+
+
+
 
 module.exports = router;
