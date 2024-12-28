@@ -11,6 +11,8 @@ const { getAllUserStats, getUserStatById, createUserStat, updateUserStat, delete
 const { getAllUserTaskSummaries, getUserTaskSummaryById, createUserTaskSummary, updateUserTaskSummary, deleteUserTaskSummary } = require('../controllers/userTaskSummaryController');
 const { getAllTags, getTagById, createTag, updateTag, deleteTag } = require('../controllers/tagsController');
 const { getAllSettings, getSettingById, createSetting, updateSetting, deleteSetting, } = require('../controllers/SettingsController');
+const { register, login, authenticateToken, } = require('../controllers/AuthController');
+const authRoutes = require('./AuthRoutes');
 const { getAllUserTags, getUserTagById, createUserTag, updateUserTag, deleteUserTag, } = require('../controllers/userTagController');
 const { getAllBlogs, getBlogById, createBlog, updateBlog, deleteBlog, } = require('../controllers/blogController');
 
@@ -117,7 +119,6 @@ router.delete('/deleteBlog/:id', deleteBlog);
 
 
 //AUTH +
-const authRoutes = require('./routes/AuthRoutes');
 router.use('/auth', authRoutes);
 
 module.exports = router;
