@@ -39,6 +39,9 @@ router.get('/active_projects/:create', createProject);
 router.get('/active_projects/:update', updateProject);
 router.get('/active_projects/:delete', deleteProject);
 
+//AUTH
+const authRoutes = require('./routes/AuthRoutes');
+router.use('/auth', authRoutes);
 
 
 
