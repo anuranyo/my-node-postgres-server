@@ -1,4 +1,5 @@
 const LinksModel = require('../models/LinksModel');
+const pool = require('../db/connection'); 
 
 // Получить все ссылки
 exports.getAllLinks = async (req, res, next) => {

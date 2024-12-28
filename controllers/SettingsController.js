@@ -1,4 +1,5 @@
 const SettingsModel = require('../models/SettingsModel');
+const pool = require('../db/connection'); 
 
 // Получить все настройки
 exports.getAllSettings = async (req, res, next) => {

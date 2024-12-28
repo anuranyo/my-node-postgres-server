@@ -1,4 +1,5 @@
 const UserTagModel = require('../models/UserTagModel');
+const pool = require('../db/connection'); 
 
 // Получить все связи тегов с пользователями
 exports.getAllUserTags = async (req, res, next) => {

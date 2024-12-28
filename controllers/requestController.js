@@ -1,4 +1,5 @@
 const RequestsModel = require('../models/requestModel');
+const pool = require('../db/connection'); 
 
 exports.getAllRequests = async (req, res, next) => {
   try {

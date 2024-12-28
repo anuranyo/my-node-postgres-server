@@ -1,4 +1,5 @@
 const UserContactInfoModel = require('../models/userContactInfoModel');
+const pool = require('../db/connection'); 
 
 // Получить всю контактную информацию
 exports.getAllUserContactInfos = async (req, res, next) => {

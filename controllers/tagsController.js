@@ -1,4 +1,5 @@
 const TagModel = require('../models/tagModel');
+const pool = require('../db/connection'); 
 
 // Получить все теги
 exports.getAllTags = async (req, res, next) => {

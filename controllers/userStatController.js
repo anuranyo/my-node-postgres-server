@@ -1,4 +1,5 @@
 const UserStatsModel = require('../models/UserStatModel');
+const pool = require('../db/connection'); 
 
 // Получить всю статистику пользователей
 exports.getAllUserStats = async (req, res, next) => {

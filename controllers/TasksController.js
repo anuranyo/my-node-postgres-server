@@ -1,4 +1,5 @@
 const TasksModel = require('../models/TasksModel');
+const pool = require('../db/connection'); 
 
 // Получить все задачи
 exports.getAllTasks = async (req, res, next) => {

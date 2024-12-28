@@ -1,4 +1,6 @@
 const userModel = require('../models/userModel');
+const pool = require('../db/connection'); 
+
 
 exports.getAllUsers = async (req, res, next) => {
   try {

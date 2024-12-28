@@ -1,4 +1,5 @@
 const JobsModel = require('../models/JobsModel');
+const pool = require('../db/connection'); 
 
 // Получить все вакансии
 exports.getAllJobs = async (req, res, next) => {

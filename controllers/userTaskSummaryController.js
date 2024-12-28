@@ -1,4 +1,5 @@
 const UserTaskSummaryModel = require('../models/UserTaskSummaryModel');
+const pool = require('../db/connection'); 
 
 // Получить все сводки задач пользователей
 exports.getAllUserTaskSummaries = async (req, res, next) => {
