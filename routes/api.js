@@ -5,11 +5,11 @@ const { getAllLinks, getProjectById, createProject, updateProject, deleteProject
 const router = express.Router();
 
 // USERS ROUTES
-router.get('/users', getAllUsers); 
-router.get('/users/:id', getUserById);
-router.get('/users/:id', createProject);
-router.get('/users/:id', updateProject);
-router.get('/users/:id', deleteProject);
+router.get('/getAllUsers', getAllUsers); 
+router.get('/getUserById/:id', getUserById);
+router.post('/createProject/:id', createProject);
+router.put('/updateProject/:id', updateProject);
+router.delete('/deleteProject/:id', deleteProject);
 
 // TASKS ROUTES
 router.get('/getAllTasks/', getAllTasks);
@@ -33,11 +33,32 @@ router.put('/updateJob/:id', updateJob);
 router.delete('/deleteJob/:id', deleteJob);
 
 //ACTIVE PROJECT ROUTES
-router.get('/active_projects', getAllLinks);
-router.get('/active_projects/:id', getProjectById);
-router.get('/active_projects/:create', createProject);
-router.get('/active_projects/:update', updateProject);
-router.get('/active_projects/:delete', deleteProject);
+router.get('/getAllLinks', getAllLinks);
+router.get('/getProjectById/:id', getProjectById);
+router.post('/createProject/', createProject);
+router.put('/updateProject/:id', updateProject);
+router.delete('/deleteProject/:id', deleteProject);
+
+//REQUEST ROUTES
+router.get('/getAllRequests', getAllRequests);
+router.get('/getRequestById/:id', getRequestById);
+router.post('/createRequest/', createRequest);
+router.put('/updateRequest/:id', updateRequest);
+router.delete('/deleteRequest/:id', deleteRequest);
+
+//USER CONTACT INFO ROUTES
+router.get('/getAllUserContactInfos', getAllUserContactInfos);
+router.get('/getUserContactInfoById/:id', getUserContactInfoById);
+router.post('/createUserContactInfo/', createUserContactInfo);
+router.put('/updateUserContactInfo/:id', updateUserContactInfo);
+router.delete('/deleteUserContactInfo/:id', deleteUserContactInfo);
+
+//COLLEAGUES ROUTES
+router.get('/getAllColleagues', getAllColleagues);
+router.get('/getColleagueById/:id', getColleagueById);
+router.post('/createColleague/', createColleague);
+router.put('/updateColleague/:id', updateColleague);
+router.delete('/deleteColleague/:id', deleteColleague);
 
 
 

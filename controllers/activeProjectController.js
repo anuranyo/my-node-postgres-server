@@ -1,4 +1,4 @@
-const pool = require('../db/connection');
+const ActiveProjectsModel = require('../models/ActiveProjectsModel');
 
 exports.getAllProjects = async (req, res, next) => {
   try {
