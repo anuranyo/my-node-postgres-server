@@ -1,16 +1,14 @@
 const pool = require('../db/connection');
 
-// Получить все ссылки
 exports.getAllLinks = async (req, res, next) => {
   try {
     const { rows } = await pool.query('SELECT * FROM public."Links"');
     res.status(200).json(rows);
   } catch (error) {
-    next(error); // Передаём ошибку middleware
+    next(error); 
   }
 };
 
-// Получить ссылку по ID
 exports.getLinkById = async (req, res, next) => {
   const id = parseInt(req.params.id, 10);
 
@@ -24,11 +22,10 @@ exports.getLinkById = async (req, res, next) => {
 
     res.status(200).json(link);
   } catch (error) {
-    next(error); // Передаём ошибку middleware
+    next(error); 
   }
 };
 
-// Создать новую ссылку
 exports.createLink = async (req, res, next) => {
   const { user_id, name, icon, url } = req.body;
 
@@ -43,11 +40,10 @@ exports.createLink = async (req, res, next) => {
 
     res.status(201).json(newLink);
   } catch (error) {
-    next(error); // Передаём ошибку middleware
+    next(error);
   }
 };
 
-// Обновить ссылку по ID
 exports.updateLink = async (req, res, next) => {
   const id = parseInt(req.params.id, 10);
   const { user_id, name, icon, url } = req.body;
@@ -66,13 +62,12 @@ exports.updateLink = async (req, res, next) => {
       return res.status(404).json({ message: 'Link not found' });
     }
 
-    res.status(204).send(); // No Content
+    res.status(204).send(); 
   } catch (error) {
-    next(error); // Передаём ошибку middleware
+    next(error); 
   }
 };
 
-// Удалить ссылку по ID
 exports.deleteLink = async (req, res, next) => {
   const id = parseInt(req.params.id, 10);
 
@@ -85,8 +80,8 @@ exports.deleteLink = async (req, res, next) => {
       return res.status(404).json({ message: 'Link not found' });
     }
 
-    res.status(204).send(); // No Content
+    res.status(204).send(); 
   } catch (error) {
-    next(error); // Передаём ошибку middleware
+    next(error); 
   }
 };
