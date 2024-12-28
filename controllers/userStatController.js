@@ -1,4 +1,4 @@
-const UserStatsModel = require('../models/UserStatsModel');
+const UserStatsModel = require('../models/UserStatModel');
 
 // Получить всю статистику пользователей
 exports.getAllUserStats = async (req, res, next) => {

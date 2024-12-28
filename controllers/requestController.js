@@ -1,4 +1,4 @@
-const RequestsModel = require('../models/requestsModel');
+const RequestsModel = require('../models/requestModel');
 
 exports.getAllRequests = async (req, res, next) => {
   try {
