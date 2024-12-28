@@ -12,6 +12,7 @@ const { getAllUserTaskSummaries, getUserTaskSummaryById, createUserTaskSummary, 
 const { getAllTags, getTagById, createTag, updateTag, deleteTag } = require('../controllers/tagsController');
 const { getAllSettings, getSettingById, createSetting, updateSetting, deleteSetting, } = require('../controllers/SettingsController');
 const { getAllUserTags, getUserTagById, createUserTag, updateUserTag, deleteUserTag, } = require('../controllers/userTagController');
+const { getAllBlogs, getBlogById, createBlog, updateBlog, deleteBlog, } = require('../controllers/blogController');
 
 
 const router = express.Router();
@@ -106,6 +107,14 @@ router.get('/getUserTagById/:id', getUserTagById);
 router.post('/createUserTag/', createUserTag);
 router.put('/updateUserTag/:id', updateUserTag);
 router.delete('/deleteUserTag/:id', deleteUserTag);
+
+//BLOG ROUTES
+router.get('/getAllBlogs/', getAllBlogs);
+router.get('/getBlogById/:id', getBlogById);
+router.post('/createBlog/', createBlog);
+router.put('/updateBlog/:id', updateBlog);
+router.delete('/deleteBlog/:id', deleteBlog);
+
 
 //AUTH +
 const authRoutes = require('./routes/AuthRoutes');
