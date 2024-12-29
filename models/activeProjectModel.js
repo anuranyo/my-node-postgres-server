@@ -46,4 +46,18 @@ class ActiveProjectsModel {
   }
 }
 
+// Получить проекты, отсортированные по дате
+exports.getProjectsSortedByDate = async (order = 'ASC') => {
+  const query = `SELECT * FROM public."activeprojects" ORDER BY join_date ${order};`;
+  const { rows } = await pool.query(query);
+  return rows;
+};
+
+// Получить проекты, отсортированные по имени
+exports.getProjectsSortedByName = async (order = 'ASC') => {
+  const query = `SELECT * FROM public."activeprojects" ORDER BY name ${order};`;
+  const { rows } = await pool.query(query);
+  return rows;
+};
+
 module.exports = ActiveProjectsModel;

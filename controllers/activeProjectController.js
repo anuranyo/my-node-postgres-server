@@ -86,3 +86,27 @@ exports.deleteProject = async (req, res, next) => {
     next(error); 
   }
 };
+
+exports.getProjectsSortedByDate = async (req, res, next) => {
+  const order = req.query.order === 'asc' ? 'ASC' : 'DESC';
+
+  try {
+    const query = `SELECT * FROM public."activeprojects" ORDER BY join_date ${order};`;
+    const { rows } = await pool.query(query);
+    res.status(200).json(rows);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getProjectsSortedByName = async (req, res, next) => {
+  const order = req.query.order === 'asc' ? 'ASC' : 'DESC';
+
+  try {
+    const query = `SELECT * FROM public."activeprojects" ORDER BY name ${order};`;
+    const { rows } = await pool.query(query);
+    res.status(200).json(rows);
+  } catch (error) {
+    next(error);
+  }
+};

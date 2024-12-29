@@ -3,7 +3,7 @@ const { getAllUsers, getUserById, createUser, updateUser, deleteUser } = require
 const { getAllLinks, getLinkById, createLink, updateLink, deleteLink } = require('../controllers/linkController');
 const { getAllTasks, getTaskById, createTask, updateTask, deleteTask } = require('../controllers/TasksController');
 const { getAllJobs, getJobById, createJob, updateJob, deleteJob } = require('../controllers/JobsController');
-const { getAllProjects, getProjectById, createProject, updateProject, deleteProject } = require('../controllers/activeProjectController');
+const { getAllProjects, getProjectById, createProject, updateProject, deleteProject, getProjectsSortedByDate, getProjectsSortedByName } = require('../controllers/activeProjectController');
 const { getAllRequests, getRequestById, createRequest, updateRequest, deleteRequest } = require('../controllers/requestController');
 const { getAllUserContactInfos, getUserContactInfoById, createUserContactInfo, updateUserContactInfo, deleteUserContactInfo } = require('../controllers/userContactInfoController');
 const { getAllColleagues, getColleagueById, createColleague, updateColleague, deleteColleague } = require('../controllers/colleaguesController');
@@ -53,6 +53,8 @@ router.get('/getProjectById/:id', getProjectById);
 router.post('/createProject/', createProject);
 router.put('/updateProject/:id', updateProject);
 router.delete('/deleteProject/:id', deleteProject);
+router.get('/getProjectsSortedByDate', getProjectsSortedByDate);
+router.get('/getProjectsSortedByName', getProjectsSortedByName);
 
 //REQUEST ROUTES
 router.get('/getAllRequests', getAllRequests);
