@@ -63,16 +63,17 @@ class TasksModel {
     const query = `
       SELECT *
       FROM public."tasks"
-      WHERE user_id = 4;
+      WHERE user_id = $1;
     `;
     try {
-      const { rows } = await pool.query(query, [userId]);
+      const { rows } = await pool.query(query, [userId]); // Используем параметр $1
       return rows; // Возвращаем массив задач
     } catch (error) {
       console.error('Error fetching tasks by user ID:', error);
       throw error;
     }
   }
+  
 }
 
 
