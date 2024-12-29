@@ -88,15 +88,27 @@ exports.deleteReport = async (req, res, next) => {
 
 // Получить все отчеты по user_id
 exports.getAllReportsByUserId = async (req, res, next) => {
-  const userId = parseInt(req.params.userId, 10);
-
-  if (isNaN(userId)) {
-    return res.status(400).json({ message: 'Invalid user ID' });
-  }
-
-  try {
-    const reports = await ReportsModel.getAllReportsByUserId(userId);
-
-    if (reports.length === 0) { return res.status(404).json({ message: 'No reports found for this user' }); }
-
-    res.status(200).json(reports); } catch (error) { next(error); } };
+    try {
+      const userId = parseInt(req.params.userId, 10);
+  
+      // Проверка на валидность userId
+      if (isNaN(userId)) {
+        return res.status(400).json({ message: 'Invalid user ID' });
+      }
+  
+      // Получение отчетов из модели
+      const reports = await ReportsModel.getAllReportsByUserId(userId);
+  
+      // Проверка, есть ли отчеты
+      if (!reports || reports.length === 0) {
+        return res.status(404).json({ message: 'No reports found for this user' });
+      }
+  
+      // Возвращаем успешный ответ с отчетами
+      res.status(200).json(reports);
+    } catch (error) {
+      // Передаем ошибку в middleware для обработки
+      next(error);
+    }
+  };
+  
