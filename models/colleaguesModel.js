@@ -44,6 +44,23 @@ class ColleaguesModel {
     const { rows } = await pool.query(query, [id]);
     return rows[0];
   }
+
+  // Получить всех коллег по user_id
+static async getColleaguesByUserId(userId) {
+  const query = `
+    SELECT *
+    FROM public."colleagues"
+    WHERE user_id = $1;
+  `;
+  try {
+    const { rows } = await pool.query(query, [userId]); // Параметризованный запрос
+    return rows; // Возвращаем массив коллег
+  } catch (error) {
+    console.error('Error fetching colleagues by user ID:', error);
+    throw error;
+  }
+}
+
 }
 
 module.exports = ColleaguesModel;

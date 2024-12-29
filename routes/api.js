@@ -6,7 +6,7 @@ const { getAllJobs, getJobById, createJob, updateJob, deleteJob } = require('../
 const { getAllProjects, getProjectById, createProject, updateProject, deleteProject, getProjectsSortedByDate, getProjectsSortedByName } = require('../controllers/activeProjectController');
 const { getAllRequests, getRequestById, createRequest, updateRequest, deleteRequest } = require('../controllers/requestController');
 const { getAllUserContactInfos, getUserContactInfoById, createUserContactInfo, updateUserContactInfo, deleteUserContactInfo } = require('../controllers/userContactInfoController');
-const { getAllColleagues, getColleagueById, createColleague, updateColleague, deleteColleague } = require('../controllers/colleaguesController');
+const { getAllColleagues, getColleagueById, createColleague, updateColleague, deleteColleague, getColleaguesByUserId } = require('../controllers/colleaguesController');
 const { getAllUserStats, getUserStatById, createUserStat, updateUserStat, deleteUserStat, getStatsByUserId } = require('../controllers/userStatController');
 const { getAllUserTaskSummaries, getUserTaskSummaryById, createUserTaskSummary, updateUserTaskSummary, deleteUserTaskSummary } = require('../controllers/userTaskSummaryController');
 const { getAllTags, getTagById, createTag, updateTag, deleteTag } = require('../controllers/tagsController');
@@ -15,7 +15,7 @@ const { register, login, authenticateToken, } = require('../controllers/AuthCont
 const authRoutes = require('./AuthRoutes');
 const { getAllUserTags, getUserTagById, createUserTag, updateUserTag, deleteUserTag, } = require('../controllers/userTagController');
 const { getAllBlogs, getBlogById, createBlog, updateBlog, deleteBlog, } = require('../controllers/blogController');
-
+const { getAllReports, getReportById, createReport, updateReport, deleteReport, getAllReportsByUserId } = require('../controllers/ReportsController');
 
 const router = express.Router();
 
@@ -81,6 +81,7 @@ router.get('/getColleagueById/:id', getColleagueById);
 router.post('/createColleague/', createColleague);
 router.put('/updateColleague/:id', updateColleague);
 router.delete('/deleteColleague/:id', deleteColleague);
+router.get('/getColleaguesByUserId/:userId', getColleaguesByUserId);
 
 //USER STAT ROUTES
 router.get('/getAllUserStats', getAllUserStats);
@@ -125,6 +126,13 @@ router.post('/createBlog/', createBlog);
 router.put('/updateBlog/:id', updateBlog);
 router.delete('/deleteBlog/:id', deleteBlog);
 
+// REPORTS ROUTES
+router.get('/getAllReports', getAllReports);
+router.get('/getReportById/:id', getReportById);
+router.post('/createReport', createReport);
+router.put('/updateReport/:id', updateReport);
+router.delete('/deleteReport/:id', deleteReport);
+router.get('/getAllReportsByUserId/:userId', getAllReportsByUserId);
 
 //AUTH +
 router.use('/auth', authRoutes);
