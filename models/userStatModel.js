@@ -44,6 +44,18 @@ class UserStatsModel {
     const { rows } = await pool.query(query, [id]);
     return rows[0];
   }
+
+    // Получить статистику по user_id
+    static async getStatsByUserId(userId) {
+      const query = `
+        SELECT us.*
+        FROM public.userstats us
+        JOIN public."Users" u ON us.user_id = u.user_id
+        WHERE us.user_id = $1;
+      `;
+      const { rows } = await pool.query(query, [userId]);
+      return rows;
+    }
 }
 
 module.exports = UserStatsModel;

@@ -91,3 +91,24 @@ exports.deleteUserStat = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getStatsByUserId = async (req, res, next) => {
+  const userId = parseInt(req.params.userId, 10);
+
+  if (isNaN(userId)) {
+    return res.status(400).json({ message: 'Invalid user ID' });
+  }
+
+  try {
+    const stats = await userStatModel.getStatsByUserId(userId);
+
+    if (stats.length === 0) {
+      return res.status(404).json({ message: 'Stats not found for this user' });
+    }
+
+    res.status(200).json(stats);
+  } catch (error) {
+    next(error);
+  }
+};
+

@@ -7,7 +7,7 @@ const { getAllProjects, getProjectById, createProject, updateProject, deleteProj
 const { getAllRequests, getRequestById, createRequest, updateRequest, deleteRequest } = require('../controllers/requestController');
 const { getAllUserContactInfos, getUserContactInfoById, createUserContactInfo, updateUserContactInfo, deleteUserContactInfo } = require('../controllers/userContactInfoController');
 const { getAllColleagues, getColleagueById, createColleague, updateColleague, deleteColleague } = require('../controllers/colleaguesController');
-const { getAllUserStats, getUserStatById, createUserStat, updateUserStat, deleteUserStat } = require('../controllers/userStatController');
+const { getAllUserStats, getUserStatById, createUserStat, updateUserStat, deleteUserStat, getStatsByUserId } = require('../controllers/userStatController');
 const { getAllUserTaskSummaries, getUserTaskSummaryById, createUserTaskSummary, updateUserTaskSummary, deleteUserTaskSummary } = require('../controllers/userTaskSummaryController');
 const { getAllTags, getTagById, createTag, updateTag, deleteTag } = require('../controllers/tagsController');
 const { getAllSettings, getSettingById, createSetting, updateSetting, deleteSetting, } = require('../controllers/SettingsController');
@@ -26,6 +26,7 @@ router.post('/createUser/', createUser);
 router.put('/updateUser/:id', updateUser);
 router.delete('/deleteUser/:id', deleteUser);
 
+
 // TASKS ROUTES
 router.get('/getAllTasks/', getAllTasks);
 router.get('/getTaskById/:id', getTaskById);
@@ -34,7 +35,8 @@ router.put('/updateTask/:id', updateTask);
 router.delete('/deleteTask/:id', deleteTask);
 router.get('/getTasksSortedByDeadline/', getTasksSortedByDeadline);
 router.get('/getTasksSortedByStatus/', getTasksSortedByStatus);
-router.get('/getAllTasksByID/:id', getAllTasksByID);
+router.get('/getAllTasksByID/:userId', getAllTasksByID);
+
 
 // LINK ROUTES
 router.get('/getAllLinks', getAllLinks);
@@ -86,6 +88,7 @@ router.get('/getUserStatById/:id', getUserStatById);
 router.post('/createUserStat/', createUserStat);
 router.put('/updateUserStat/:id', updateUserStat);
 router.delete('/deleteUserStat/:id', deleteUserStat);
+router.get('/getStatsByUserId/:userId', getStatsByUserId);
 
 //USER TASK SUMMARY ROUTES
 router.get('/getAllUserTaskSummaries', getAllUserTaskSummaries);

@@ -88,11 +88,18 @@ exports.getTasksSortedByStatus = async (req, res, next) => {
 };
 
 exports.getAllTasksByID = async (req, res, next) => {
-  const userId = parseInt(req.params.userId, 10); // Получаем user_id из параметров запроса
+  const userId = parseInt(req.params.userId, 10);
+
+  if (isNaN(userId)) {
+    return res.status(400).json({ error: 'Invalid user ID' });
+  }
 
   try {
     const tasks = await TasksModel.getAllTasksByID(userId);
-    res.status(200).json(tasks); // Возвращаем массив задач
+    if (tasks.length === 0) {
+      return res.status(404).json({ message: 'No tasks found for this user' });
+    }
+    res.status(200).json(tasks);
   } catch (error) {
     next(error);
   }

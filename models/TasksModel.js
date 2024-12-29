@@ -44,14 +44,14 @@ class TasksModel {
     const { rows } = await pool.query(query, [id]);
     return rows[0];
   }
-  
+
   // Сортировка задач по deadline
   static async getTasksSortedByDeadline(order = 'ASC') {
     const query = `SELECT * FROM public."tasks" ORDER BY deadline ${order};`;
     const { rows } = await pool.query(query);
     return rows;
   }
-  
+    
   // Сортировка задач по status
   static async getTasksSortedByStatus(order = 'ASC') {
     const query = `SELECT * FROM public."tasks" ORDER BY status ${order};`;
@@ -59,16 +59,22 @@ class TasksModel {
     return rows;
   }
 
-  // Получить все задачи для указанного user_id
   static async getAllTasksByID(userId) {
     const query = `
       SELECT *
-      FROM public.tasks
-      WHERE user_id = $1;
+      FROM public."tasks"
+      WHERE user_id = 4;
     `;
-    const { rows } = await pool.query(query, [userId]);
-    return rows; // Возвращаем массив задач
+    try {
+      const { rows } = await pool.query(query, [userId]);
+      return rows; // Возвращаем массив задач
+    } catch (error) {
+      console.error('Error fetching tasks by user ID:', error);
+      throw error;
+    }
   }
 }
+
+
 
 module.exports = TasksModel;
