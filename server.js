@@ -15,11 +15,13 @@ const PORT = process.env.PORT || 3000;
 app.use(bodyParser.json());
 
 // Enable CORS
-app.use(cors({
-  origin: '*', // Allow all origins; replace with specific origin(s) for better security
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
-}));
+app.use(
+  cors({
+    origin: '*', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+    allowedHeaders: ['Content-Type', 'Authorization', 'ngrok-skip-browser-warning'],
+  })
+)
 
 // Настройка CSP для поддержки blob и стилей
 app.use(
