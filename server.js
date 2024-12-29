@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
+const cors = require('cors'); // Import the CORS middleware
 const ngrok = require('ngrok');
 require('dotenv').config();
 
@@ -12,6 +13,13 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(bodyParser.json());
+
+// Enable CORS
+app.use(cors({
+  origin: '*', // Allow all origins; replace with specific origin(s) for better security
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+}));
 
 // Настройка CSP для поддержки blob и стилей
 app.use(
