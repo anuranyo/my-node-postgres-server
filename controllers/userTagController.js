@@ -4,7 +4,7 @@ const pool = require('../db/connection');
 // Получить все связи тегов с пользователями
 exports.getAllUserTags = async (req, res, next) => {
   try {
-    const { rows } = await pool.query('SELECT * FROM public."UserTags"');
+    const { rows } = await pool.query('SELECT * FROM public."usertags"');
     res.status(200).json(rows);
   } catch (error) {
     next(error);
@@ -16,7 +16,7 @@ exports.getUserTagById = async (req, res, next) => {
   const id = parseInt(req.params.id, 10);
 
   try {
-    const { rows } = await pool.query('SELECT * FROM public."UserTags" WHERE user_tag_id = $1', [id]);
+    const { rows } = await pool.query('SELECT * FROM public."usertags" WHERE user_tag_id = $1', [id]);
     const userTag = rows[0];
 
     if (!userTag) {
@@ -35,7 +35,7 @@ exports.createUserTag = async (req, res, next) => {
 
   try {
     const query = `
-      INSERT INTO public."UserTags" (user_id, tag_id)
+      INSERT INTO public."usertags" (user_id, tag_id)
       VALUES ($1, $2)
       RETURNING *;
     `;
@@ -55,7 +55,7 @@ exports.updateUserTag = async (req, res, next) => {
 
   try {
     const query = `
-      UPDATE public."UserTags"
+      UPDATE public."usertags"
       SET user_id = $1, tag_id = $2
       WHERE user_tag_id = $3
       RETURNING *;
@@ -78,7 +78,7 @@ exports.deleteUserTag = async (req, res, next) => {
   const id = parseInt(req.params.id, 10);
 
   try {
-    const query = 'DELETE FROM public."UserTags" WHERE user_tag_id = $1 RETURNING *;';
+    const query = 'DELETE FROM public."usertags" WHERE user_tag_id = $1 RETURNING *;';
     const { rows } = await pool.query(query, [id]);
     const deletedUserTag = rows[0];
 
