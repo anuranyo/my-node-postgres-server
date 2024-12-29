@@ -4,13 +4,13 @@ const { getAllLinks, getLinkById, createLink, updateLink, deleteLink } = require
 const { getAllTasks, getTaskById, createTask, updateTask, deleteTask, getTasksSortedByDeadline, getTasksSortedByStatus, getAllTasksByID } = require('../controllers/TasksController');
 const { getAllJobs, getJobById, createJob, updateJob, deleteJob } = require('../controllers/JobsController');
 const { getAllProjects, getProjectById, createProject, updateProject, deleteProject, getProjectsSortedByDate, getProjectsSortedByName } = require('../controllers/activeProjectController');
-const { getAllRequests, getRequestById, createRequest, updateRequest, deleteRequest } = require('../controllers/requestController');
+const { getAllRequests, getRequestById, createRequest, updateRequest, deleteRequest, getAllRequestsByUserId } = require('../controllers/requestController');
 const { getAllUserContactInfos, getUserContactInfoById, createUserContactInfo, updateUserContactInfo, deleteUserContactInfo } = require('../controllers/userContactInfoController');
 const { getAllColleagues, getColleagueById, createColleague, updateColleague, deleteColleague, getColleaguesByUserId } = require('../controllers/colleaguesController');
 const { getAllUserStats, getUserStatById, createUserStat, updateUserStat, deleteUserStat, getStatsByUserId } = require('../controllers/userStatController');
 const { getAllUserTaskSummaries, getUserTaskSummaryById, createUserTaskSummary, updateUserTaskSummary, deleteUserTaskSummary } = require('../controllers/userTaskSummaryController');
 const { getAllTags, getTagById, createTag, updateTag, deleteTag } = require('../controllers/tagsController');
-const { getAllSettings, getSettingById, createSetting, updateSetting, deleteSetting, } = require('../controllers/SettingsController');
+const { getAllSettings, getSettingById, createSetting, updateSetting, deleteSetting, getAllSettingsByUserId } = require('../controllers/SettingsController');
 const { register, login, authenticateToken, } = require('../controllers/AuthController');
 const authRoutes = require('./AuthRoutes');
 const { getAllUserTags, getUserTagById, createUserTag, updateUserTag, deleteUserTag, } = require('../controllers/userTagController');
@@ -67,6 +67,8 @@ router.get('/getRequestById/:id', getRequestById);
 router.post('/createRequest/', createRequest);
 router.put('/updateRequest/:id', updateRequest);
 router.delete('/deleteRequest/:id', deleteRequest);
+router.get('/getAllRequestsByUserId/:userId', getAllRequestsByUserId);
+
 
 //USER CONTACT INFO ROUTES
 router.get('/getAllUserContactInfos', getAllUserContactInfos);
@@ -111,6 +113,8 @@ router.get('/getSettingById/:id', getSettingById);
 router.post('/createSetting/', createSetting);
 router.put('/updateSetting/:id', updateSetting);
 router.delete('/deleteSetting/:id', deleteSetting);
+router.get('/getAllSettingsByUserId/:userId', getAllSettingsByUserId);
+
 
 // USER TAGS ROUTES
 router.get('/getAllUserTags/', getAllUserTags);

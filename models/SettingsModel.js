@@ -44,6 +44,18 @@ class SettingsModel {
     const { rows } = await pool.query(query, [id]);
     return rows[0];
   }
+  
+  static async getAllSettingsByUserId(userId) {
+    const query = 'SELECT * FROM public."settings" WHERE user_id = $1';
+    try {
+      const { rows } = await pool.query(query, [userId]); // Параметризованный запрос
+      return rows;
+    } catch (error) {
+      console.error('Error fetching settings by user ID:', error);
+      throw error;
+    }
+  }
 }
+
 
 module.exports = SettingsModel;

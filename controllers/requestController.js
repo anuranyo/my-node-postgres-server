@@ -69,3 +69,26 @@ exports.deleteRequest = async (req, res, next) => {
     next(error);
   }
 };
+
+
+// Получить все запросы по user_id
+exports.getAllRequestsByUserId = async (req, res, next) => {
+  const userId = parseInt(req.params.userId, 10);
+
+  if (isNaN(userId)) {
+    return res.status(400).json({ message: 'Invalid user ID' });
+  }
+
+  try {
+    const requests = await RequestsModel.getAllRequestsByUserId(userId);
+
+    if (!requests || requests.length === 0) {
+      return res.status(404).json({ message: 'No requests found for this user' });
+    }
+
+    res.status(200).json(requests);
+  } catch (error) {
+    next(error);
+  }
+};
+

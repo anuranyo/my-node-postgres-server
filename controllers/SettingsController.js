@@ -64,3 +64,23 @@ exports.deleteSetting = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getAllSettingsByUserId = async (req, res, next) => {
+  const userId = parseInt(req.params.userId, 10);
+
+  if (isNaN(userId)) {
+    return res.status(400).json({ message: 'Invalid user ID' });
+  }
+
+  try {
+    const settings = await SettingsModel.getAllSettingsByUserId(userId);
+
+    if (!settings || settings.length === 0) {
+      return res.status(404).json({ message: 'No settings found for this user' });
+    }
+
+    res.status(200).json(settings);
+  } catch (error) {
+    next(error);
+  }
+};

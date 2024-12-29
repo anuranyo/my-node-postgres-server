@@ -44,6 +44,19 @@ class RequestsModel {
     const { rows } = await pool.query(query, [id]);
     return rows[0];
   }
+
+  // Получить все запросы по user_id
+  static async getAllRequestsByUserId(userId) {
+    const query = 'SELECT * FROM public."requests" WHERE user_id = $1';
+    try {
+      const { rows } = await pool.query(query, [userId]); // Параметризованный запрос
+      return rows;
+    } catch (error) {
+      console.error('Error fetching requests by user ID:', error);
+      throw error;
+    }
+  }
+
 }
 
 module.exports = RequestsModel;
