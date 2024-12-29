@@ -4,7 +4,7 @@ const pool = require('../db/connection');
 // Получить все сводки задач пользователей
 exports.getAllUserTaskSummaries = async (req, res, next) => {
   try {
-    const { rows } = await pool.query('SELECT * FROM public."UserTaskSummary"');
+    const { rows } = await pool.query('SELECT * FROM public."usertasksummary"');
     res.status(200).json(rows);
   } catch (error) {
     next(error);
@@ -16,7 +16,7 @@ exports.getUserTaskSummaryById = async (req, res, next) => {
   const id = parseInt(req.params.id, 10);
 
   try {
-    const { rows } = await pool.query('SELECT * FROM public."UserTaskSummary" WHERE summary_id = $1', [id]);
+    const { rows } = await pool.query('SELECT * FROM public."usertasksummary" WHERE summary_id = $1', [id]);
     const summary = rows[0];
 
     if (!summary) {
@@ -35,7 +35,7 @@ exports.createUserTaskSummary = async (req, res, next) => {
 
   try {
     const query = `
-      INSERT INTO public."UserTaskSummary" (user_id, tasks_completed, tasks_left)
+      INSERT INTO public."usertasksummary" (user_id, tasks_completed, tasks_left)
       VALUES ($1, $2, $3)
       RETURNING *;
     `;
@@ -55,7 +55,7 @@ exports.updateUserTaskSummary = async (req, res, next) => {
 
   try {
     const query = `
-      UPDATE public."UserTaskSummary"
+      UPDATE public."usertasksummary"
       SET user_id = $1, tasks_completed = $2, tasks_left = $3
       WHERE summary_id = $4
       RETURNING *;
@@ -78,7 +78,7 @@ exports.deleteUserTaskSummary = async (req, res, next) => {
   const id = parseInt(req.params.id, 10);
 
   try {
-    const query = 'DELETE FROM public."UserTaskSummary" WHERE summary_id = $1 RETURNING *;';
+    const query = 'DELETE FROM public."usertasksummary" WHERE summary_id = $1 RETURNING *;';
     const { rows } = await pool.query(query, [id]);
     const deletedSummary = rows[0];
 
