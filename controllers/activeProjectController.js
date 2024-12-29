@@ -32,11 +32,11 @@ exports.createProject = async (req, res, next) => {
 
   try {
     const query = `
-      INSERT INTO public."activeprojects" (user_id, name, members_count, join_date, progress, deadline, description)
-      VALUES ($1, $2, $3, $4, $5, $6, $7)
+      INSERT INTO public."activeprojects" (name, members_count, join_date, progress, deadline, description)
+      VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *;
     `;
-    const { rows } = await pool.query(query, [user_id, name, members_count, join_date, progress, deadline, description]);
+    const { rows } = await pool.query(query, [name, members_count, join_date, progress, deadline, description]);
     const newProject = rows[0];
 
     res.status(201).json(newProject);
@@ -47,16 +47,16 @@ exports.createProject = async (req, res, next) => {
 
 exports.updateProject = async (req, res, next) => {
   const id = parseInt(req.params.id, 10);
-  const { user_id, name, members_count, join_date, progress, deadline, description } = req.body;
+  const { name, members_count, join_date, progress, deadline, description } = req.body;
 
   try {
     const query = `
       UPDATE public."activeprojects"
-      SET user_id = $1, name = $2, members_count = $3, join_date = $4, progress = $5, deadline = $6, description = $7
-      WHERE project_id = $8
+      SET name = $1, members_count = $2, join_date = $3, progress = $4, deadline = $5, description = $6
+      WHERE project_id = $7
       RETURNING *;
     `;
-    const { rows } = await pool.query(query, [user_id, name, members_count, join_date, progress, deadline, description, id]);
+    const { rows } = await pool.query(query, [name, members_count, join_date, progress, deadline, description, id]);
     const updatedProject = rows[0];
 
     if (!updatedProject) {

@@ -16,10 +16,10 @@ class ActiveProjectsModel {
   }
 
   // Создать новый проект
-  static async createProject({ user_id, name, members_count, join_date, progress, deadline, description }) {
+  static async createProject({name, members_count, join_date, progress, deadline, description }) {
     const query = `
-      INSERT INTO public."activeprojects" (user_id, name, members_count, join_date, progress, deadline, description)
-      VALUES ($1, $2, $3, $4, $5, $6, $7)
+      INSERT INTO public."activeprojects" (name, members_count, join_date, progress, deadline, description)
+      VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *;
     `;
     const { rows } = await pool.query(query, [user_id, name, members_count, join_date, progress, deadline, description]);
@@ -30,8 +30,8 @@ class ActiveProjectsModel {
   static async updateProject(id, { user_id, name, members_count, join_date, progress, deadline, description }) {
     const query = `
       UPDATE public."activeprojects"
-      SET user_id = $1, name = $2, members_count = $3, join_date = $4, progress = $5, deadline = $6, description = $7
-      WHERE project_id = $8
+      SET name = $1, members_count = $2, join_date = $3, progress = $4, deadline = $5, description = $6
+      WHERE project_id = $7
       RETURNING *;
     `;
     const { rows } = await pool.query(query, [user_id, name, members_count, join_date, progress, deadline, description, id]);
