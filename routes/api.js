@@ -15,7 +15,7 @@ const { register, login, authenticateToken, } = require('../controllers/AuthCont
 const authRoutes = require('./AuthRoutes');
 const { getAllUserTags, getUserTagById, createUserTag, updateUserTag, deleteUserTag, } = require('../controllers/userTagController');
 const { getAllBlogs, getBlogById, createBlog, updateBlog, deleteBlog, } = require('../controllers/blogController');
-const { getAllReports, getReportById, createReport, updateReport, deleteReport, getAllReportsByUserId } = require('../controllers/ReportControllers');
+const { getAllReports, getReportById, createReport, updateReport, deleteReport, getAllReportsByUserId } = require('../controllers/reportControllers');
 
 const router = express.Router();
 
