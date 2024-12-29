@@ -4,7 +4,7 @@ const pool = require('../db/connection');
 // Получить всех коллег
 exports.getAllColleagues = async (req, res, next) => {
   try {
-    const { rows } = await pool.query('SELECT * FROM public."Colleagues"');
+    const { rows } = await pool.query('SELECT * FROM public."colleagues"');
     res.status(200).json(rows);
   } catch (error) {
     next(error);
@@ -16,7 +16,7 @@ exports.getColleagueById = async (req, res, next) => {
   const id = parseInt(req.params.id, 10);
 
   try {
-    const { rows } = await pool.query('SELECT * FROM public."Colleagues" WHERE colleague_id = $1', [id]);
+    const { rows } = await pool.query('SELECT * FROM public."colleagues" WHERE colleague_id = $1', [id]);
     const colleague = rows[0];
 
     if (!colleague) {
@@ -35,7 +35,7 @@ exports.createColleague = async (req, res, next) => {
 
   try {
     const query = `
-      INSERT INTO public."Colleagues" (user_id, name, project_name)
+      INSERT INTO public."colleagues" (user_id, name, project_name)
       VALUES ($1, $2, $3)
       RETURNING *;
     `;
@@ -55,7 +55,7 @@ exports.updateColleague = async (req, res, next) => {
 
   try {
     const query = `
-      UPDATE public."Colleagues"
+      UPDATE public."colleagues"
       SET user_id = $1, name = $2, project_name = $3
       WHERE colleague_id = $4
       RETURNING *;
@@ -78,7 +78,7 @@ exports.deleteColleague = async (req, res, next) => {
   const id = parseInt(req.params.id, 10);
 
   try {
-    const query = 'DELETE FROM public."Colleagues" WHERE colleague_id = $1 RETURNING *;';
+    const query = 'DELETE FROM public."colleagues" WHERE colleague_id = $1 RETURNING *;';
     const { rows } = await pool.query(query, [id]);
     const deletedColleague = rows[0];
 
