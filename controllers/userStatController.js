@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const UserStatsModel = require('../models/UserStatModel');
 const pool = require('../db/connection'); 
 
 // Получить всю статистику пользователей
@@ -34,15 +34,12 @@ exports.createUserStat = async (req, res, next) => {
   const { user_id, tasks, friends_count, done_projects } = req.body;
 
   try {
-    // Хэширование user_id перед сохранением
-    const hashedUserId = await bcrypt.hash(user_id, 10);
-
     const query = `
       INSERT INTO public."UserStats" (user_id, tasks, friends_count, done_projects)
       VALUES ($1, $2, $3, $4)
       RETURNING *;
     `;
-    const { rows } = await pool.query(query, [hashedUserId, tasks, friends_count, done_projects]);
+    const { rows } = await pool.query(query, [user_id, tasks, friends_count, done_projects]);
     const newStat = rows[0];
 
     res.status(201).json(newStat);
@@ -57,16 +54,13 @@ exports.updateUserStat = async (req, res, next) => {
   const { user_id, tasks, friends_count, done_projects } = req.body;
 
   try {
-    // Хэширование user_id перед обновлением
-    const hashedUserId = await bcrypt.hash(user_id, 10);
-
     const query = `
       UPDATE public."UserStats"
       SET user_id = $1, tasks = $2, friends_count = $3, done_projects = $4
       WHERE stats_id = $5
       RETURNING *;
     `;
-    const { rows } = await pool.query(query, [hashedUserId, tasks, friends_count, done_projects, id]);
+    const { rows } = await pool.query(query, [user_id, tasks, friends_count, done_projects, id]);
     const updatedStat = rows[0];
 
     if (!updatedStat) {
