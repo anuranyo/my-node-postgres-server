@@ -4,7 +4,7 @@ const pool = require('../db/connection');
 // Получить все блоги
 exports.getAllBlogs = async (req, res, next) => {
   try {
-    const { rows } = await pool.query('SELECT * FROM public."Blogs"');
+    const { rows } = await pool.query('SELECT * FROM public."blogs"');
     res.status(200).json(rows);
   } catch (error) {
     next(error);
@@ -16,7 +16,7 @@ exports.getBlogById = async (req, res, next) => {
   const id = parseInt(req.params.id, 10);
 
   try {
-    const { rows } = await pool.query('SELECT * FROM public."Blogs" WHERE blog_id = $1', [id]);
+    const { rows } = await pool.query('SELECT * FROM public."blogs" WHERE blog_id = $1', [id]);
     const blog = rows[0];
 
     if (!blog) {
@@ -35,7 +35,7 @@ exports.createBlog = async (req, res, next) => {
 
   try {
     const query = `
-      INSERT INTO public."Blogs" (image, title, description, author, date, avatar, favorite)
+      INSERT INTO public."blogs" (image, title, description, author, date, avatar, favorite)
       VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING *;
     `;
@@ -55,7 +55,7 @@ exports.updateBlog = async (req, res, next) => {
 
   try {
     const query = `
-      UPDATE public."Blogs"
+      UPDATE public."blogs"
       SET image = $1, title = $2, description = $3, author = $4, date = $5, avatar = $6, favorite = $7
       WHERE blog_id = $8
       RETURNING *;
@@ -78,7 +78,7 @@ exports.deleteBlog = async (req, res, next) => {
   const id = parseInt(req.params.id, 10);
 
   try {
-    const query = 'DELETE FROM public."Blogs" WHERE blog_id = $1 RETURNING *;';
+    const query = 'DELETE FROM public."blogs" WHERE blog_id = $1 RETURNING *;';
     const { rows } = await pool.query(query, [id]);
     const deletedBlog = rows[0];
 
