@@ -1,11 +1,11 @@
 const express = require('express');
 const { getAllUsers, getUserById, createUser, updateUser, deleteUser } = require('../controllers/userController');
 const { getAllLinks, getLinkById, createLink, updateLink, deleteLink } = require('../controllers/linkController');
-const { getAllTasks, getTaskById, createTask, updateTask, deleteTask, getTasksSortedByDeadline, getTasksSortedByStatus, getAllTasksByID } = require('../controllers/TasksController');
+const { getAllTasks, getTaskById, createTask, updateTask, deleteTask, getTasksSortedByDeadline, getTasksSortedByStatus, getAllTasksByID, getAllTasksByUserId } = require('../controllers/TasksController');
 const { getAllJobs, getJobById, createJob, updateJob, deleteJob } = require('../controllers/JobsController');
 const { getAllProjects, getProjectById, createProject, updateProject, deleteProject, getProjectsSortedByDate, getProjectsSortedByName } = require('../controllers/activeProjectController');
 const { getAllRequests, getRequestById, createRequest, updateRequest, deleteRequest, getAllRequestsByUserId } = require('../controllers/requestController');
-const { getAllUserContactInfos, getUserContactInfoById, createUserContactInfo, updateUserContactInfo, deleteUserContactInfo } = require('../controllers/userContactInfoController');
+const { getAllUserContactInfos, getUserContactInfoById, createUserContactInfo, updateUserContactInfo, deleteUserContactInfo, getAllUserContactInfosByUserId  } = require('../controllers/userContactInfoController');
 const { getAllColleagues, getColleagueById, createColleague, updateColleague, deleteColleague, getColleaguesByUserId } = require('../controllers/colleaguesController');
 const { getAllUserStats, getUserStatById, createUserStat, updateUserStat, deleteUserStat, getStatsByUserId } = require('../controllers/userStatController');
 const { getAllUserTaskSummaries, getUserTaskSummaryById, createUserTaskSummary, updateUserTaskSummary, deleteUserTaskSummary } = require('../controllers/userTaskSummaryController');
@@ -36,6 +36,7 @@ router.delete('/deleteTask/:id', deleteTask);
 router.get('/getTasksSortedByDeadline/', getTasksSortedByDeadline);
 router.get('/getTasksSortedByStatus/', getTasksSortedByStatus);
 router.get('/getAllTasksByID/:userId', getAllTasksByID);
+router.get('/getAllTasksByUserId/:userId', getAllTasksByUserId);
 
 
 // LINK ROUTES
@@ -76,6 +77,7 @@ router.get('/getUserContactInfoById/:id', getUserContactInfoById);
 router.post('/createUserContactInfo/', createUserContactInfo);
 router.put('/updateUserContactInfo/:id', updateUserContactInfo);
 router.delete('/deleteUserContactInfo/:id', deleteUserContactInfo);
+router.get('/getAllUserContactInfosByUserId/:userId', getAllUserContactInfosByUserId);
 
 //COLLEAGUES ROUTES
 router.get('/getAllColleagues', getAllColleagues);

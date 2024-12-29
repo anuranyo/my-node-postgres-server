@@ -74,6 +74,16 @@ class TasksModel {
     }
   }
   
+  static async getAllTasksByUserId(userId) {
+    const query = 'SELECT * FROM public."tasks" WHERE user_id = $1';
+    try {
+      const { rows } = await pool.query(query, [userId]); // Параметризованный запрос
+      return rows;
+    } catch (error) {
+      console.error('Error fetching tasks by user ID:', error);
+      throw error;
+    }
+  }
 }
 
 

@@ -44,6 +44,20 @@ class UserContactInfoModel {
     const { rows } = await pool.query(query, [id]);
     return rows[0];
   }
+
+  // Получить всю контактную информацию по user_id
+  static async getAllUserContactInfosByUserId(userId) {
+    const query = 'SELECT * FROM public."usercontactinfo" WHERE user_id = $1';
+    try {
+      const { rows } = await pool.query(query, [userId]);
+      return rows;
+    } catch (error) {
+      console.error('Error fetching user contact info by user ID:', error);
+      throw error;
+    }
+  }
+
 }
+
 
 module.exports = UserContactInfoModel;
