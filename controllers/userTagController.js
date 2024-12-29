@@ -91,3 +91,23 @@ exports.deleteUserTag = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getAllUserTagsByUserId = async (req, res, next) => {
+  const userId = parseInt(req.params.userId, 10);
+
+  if (isNaN(userId)) {
+    return res.status(400).json({ message: 'Invalid user ID' });
+  }
+
+  try {
+    const userTags = await UserTagModel.getAllUserTagsByUserId(userId);
+
+    if (!userTags || userTags.length === 0) {
+      return res.status(404).json({ message: 'No tags found for this user' });
+    }
+
+    res.status(200).json(userTags);
+  } catch (error) {
+    next(error);
+  }
+};

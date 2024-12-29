@@ -44,6 +44,24 @@ class UserTagsModel {
     const { rows } = await pool.query(query, [id]);
     return rows[0];
   }
+
+  // Получить все теги по user_id
+  static async getAllUserTagsByUserId(userId) {
+    const query = `
+      SELECT ut.user_tag_id, ut.user_id, ut.tag_id, t.tag_name
+      FROM public."usertags" ut
+      INNER JOIN public."tags" t ON ut.tag_id = t.tag_id
+      WHERE ut.user_id = $1
+    `;
+    try {
+      const { rows } = await pool.query(query, [userId]);
+      return rows;
+    } catch (error) {
+      console.error('Error fetching user tags by user ID:', error);
+      throw error;
+    }
+  }
+
 }
 
 module.exports = UserTagsModel;

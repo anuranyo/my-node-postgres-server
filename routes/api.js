@@ -8,12 +8,12 @@ const { getAllRequests, getRequestById, createRequest, updateRequest, deleteRequ
 const { getAllUserContactInfos, getUserContactInfoById, createUserContactInfo, updateUserContactInfo, deleteUserContactInfo, getAllUserContactInfosByUserId  } = require('../controllers/userContactInfoController');
 const { getAllColleagues, getColleagueById, createColleague, updateColleague, deleteColleague, getColleaguesByUserId } = require('../controllers/colleaguesController');
 const { getAllUserStats, getUserStatById, createUserStat, updateUserStat, deleteUserStat, getStatsByUserId } = require('../controllers/userStatController');
-const { getAllUserTaskSummaries, getUserTaskSummaryById, createUserTaskSummary, updateUserTaskSummary, deleteUserTaskSummary } = require('../controllers/userTaskSummaryController');
+const { getAllUserTaskSummaries, getUserTaskSummaryById, createUserTaskSummary, updateUserTaskSummary, deleteUserTaskSummary, getAllUserTaskSummariesByUserId } = require('../controllers/userTaskSummaryController');
 const { getAllTags, getTagById, createTag, updateTag, deleteTag } = require('../controllers/tagsController');
 const { getAllSettings, getSettingById, createSetting, updateSetting, deleteSetting, getAllSettingsByUserId } = require('../controllers/SettingsController');
 const { register, login, authenticateToken, } = require('../controllers/AuthController');
 const authRoutes = require('./AuthRoutes');
-const { getAllUserTags, getUserTagById, createUserTag, updateUserTag, deleteUserTag, } = require('../controllers/userTagController');
+const { getAllUserTags, getUserTagById, createUserTag, updateUserTag, deleteUserTag, getAllUserTagsByUserId } = require('../controllers/userTagController');
 const { getAllBlogs, getBlogById, createBlog, updateBlog, deleteBlog, } = require('../controllers/blogController');
 const { getAllReports, getReportById, createReport, updateReport, deleteReport, getAllReportsByUserId } = require('../controllers/reportControllers');
 
@@ -101,6 +101,8 @@ router.get('/getUserTaskSummaryById/:id', getUserTaskSummaryById);
 router.post('/createUserTaskSummary/', createUserTaskSummary);
 router.put('/updateUserTaskSummary/:id', updateUserTaskSummary);
 router.delete('/deleteUserTaskSummary/:id', deleteUserTaskSummary);
+router.get('/getAllUserTaskSummariesByUserId/:userId', getAllUserTaskSummariesByUserId);
+
 
 //TAGS ROUTES
 router.get('/getAllTags', getAllTags);
@@ -124,6 +126,8 @@ router.get('/getUserTagById/:id', getUserTagById);
 router.post('/createUserTag/', createUserTag);
 router.put('/updateUserTag/:id', updateUserTag);
 router.delete('/deleteUserTag/:id', deleteUserTag);
+router.get('/getAllUserTagsByUserId/:userId', getAllUserTagsByUserId);
+
 
 //BLOG ROUTES
 router.get('/getAllBlogs/', getAllBlogs);

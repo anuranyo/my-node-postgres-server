@@ -91,3 +91,24 @@ exports.deleteUserTaskSummary = async (req, res, next) => {
     next(error);
   }
 };
+
+// Получить все сводки задач по user_id
+exports.getAllUserTaskSummariesByUserId = async (req, res, next) => {
+  const userId = parseInt(req.params.userId, 10);
+
+  if (isNaN(userId)) {
+    return res.status(400).json({ message: 'Invalid user ID' });
+  }
+
+  try {
+    const taskSummaries = await UserTaskSummaryModel.getAllUserTaskSummariesByUserId(userId);
+
+    if (!taskSummaries || taskSummaries.length === 0) {
+      return res.status(404).json({ message: 'No task summaries found for this user' });
+    }
+
+    res.status(200).json(taskSummaries);
+  } catch (error) {
+    next(error);
+  }
+};
