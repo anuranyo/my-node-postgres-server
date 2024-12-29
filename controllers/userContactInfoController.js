@@ -92,7 +92,6 @@ exports.deleteUserContactInfo = async (req, res, next) => {
   }
 };
 
-
 // Получить всю контактную информацию по user_id
 exports.getAllUserContactInfosByUserId = async (req, res, next) => {
   const userId = parseInt(req.params.userId, 10);
@@ -113,3 +112,4 @@ exports.getAllUserContactInfosByUserId = async (req, res, next) => {
     next(error);
   }
 };
+
