@@ -1,6 +1,7 @@
 const UserStatsModel = require('../models/UserStatModel');
 const pool = require('../db/connection'); 
 
+
 // Получить всю статистику пользователей
 exports.getAllUserStats = async (req, res, next) => {
   try {
@@ -100,7 +101,7 @@ exports.getStatsByUserId = async (req, res, next) => {
   }
 
   try {
-    const stats = await userStatModel.getStatsByUserId(userId);
+    const stats = await UserStatsModel.getStatsByUserId(userId);
 
     if (stats.length === 0) {
       return res.status(404).json({ message: 'Stats not found for this user' });
@@ -111,4 +112,5 @@ exports.getStatsByUserId = async (req, res, next) => {
     next(error);
   }
 };
+
 
