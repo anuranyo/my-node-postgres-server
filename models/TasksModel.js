@@ -58,6 +58,17 @@ class TasksModel {
     const { rows } = await pool.query(query);
     return rows;
   }
+
+  // Получить все задачи для указанного user_id
+  static async getAllTasksByID(userId) {
+    const query = `
+      SELECT *
+      FROM public.tasks
+      WHERE user_id = $1;
+    `;
+    const { rows } = await pool.query(query, [userId]);
+    return rows; // Возвращаем массив задач
+  }
 }
 
 module.exports = TasksModel;

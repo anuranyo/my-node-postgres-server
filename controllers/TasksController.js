@@ -86,3 +86,14 @@ exports.getTasksSortedByStatus = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getAllTasksByID = async (req, res, next) => {
+  const userId = parseInt(req.params.userId, 10); // Получаем user_id из параметров запроса
+
+  try {
+    const tasks = await TasksModel.getAllTasksByID(userId);
+    res.status(200).json(tasks); // Возвращаем массив задач
+  } catch (error) {
+    next(error);
+  }
+};
