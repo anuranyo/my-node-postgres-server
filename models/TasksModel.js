@@ -44,6 +44,20 @@ class TasksModel {
     const { rows } = await pool.query(query, [id]);
     return rows[0];
   }
+  
+  // Сортировка задач по deadline
+  static async getTasksSortedByDeadline(order = 'ASC') {
+    const query = `SELECT * FROM public."tasks" ORDER BY deadline ${order};`;
+    const { rows } = await pool.query(query);
+    return rows;
+  }
+  
+  // Сортировка задач по status
+  static async getTasksSortedByStatus(order = 'ASC') {
+    const query = `SELECT * FROM public."tasks" ORDER BY status ${order};`;
+    const { rows } = await pool.query(query);
+    return rows;
+  }
 }
 
 module.exports = TasksModel;

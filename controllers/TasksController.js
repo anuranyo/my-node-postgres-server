@@ -64,3 +64,25 @@ exports.deleteTask = async (req, res, next) => {
     next(error);
   }
 };
+
+// Сортировать задачи по deadline
+exports.getTasksSortedByDeadline = async (req, res, next) => {
+  const order = req.query.order === 'asc' ? 'ASC' : 'DESC'; // Определяем направление сортировки
+  try {
+    const tasks = await TasksModel.getTasksSortedByDeadline(order);
+    res.status(200).json(tasks);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Сортировать задачи по status
+exports.getTasksSortedByStatus = async (req, res, next) => {
+  const order = req.query.order === 'asc' ? 'ASC' : 'DESC'; // Определяем направление сортировки
+  try {
+    const tasks = await TasksModel.getTasksSortedByStatus(order);
+    res.status(200).json(tasks);
+  } catch (error) {
+    next(error);
+  }
+};
