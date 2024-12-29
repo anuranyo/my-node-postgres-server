@@ -1,4 +1,5 @@
 const blogModel = require('../models/blogModel');
+const pool = require('../db/connection');
 
 // Получить все блоги
 exports.getAllBlogs = async (req, res, next) => {

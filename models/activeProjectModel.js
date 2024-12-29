@@ -3,14 +3,14 @@ const pool = require('../db/connection');
 class ActiveProjectsModel {
   // Получить все проекты
   static async getAllProjects() {
-    const query = 'SELECT * FROM public."ActiveProjects"';
+    const query = 'SELECT * FROM public."activeprojects"';
     const { rows } = await pool.query(query);
     return rows;
   }
 
   // Получить проект по ID
   static async getProjectById(id) {
-    const query = 'SELECT * FROM public."ActiveProjects" WHERE project_id = $1';
+    const query = 'SELECT * FROM public."activeprojects" WHERE project_id = $1';
     const { rows } = await pool.query(query, [id]);
     return rows[0];
   }
@@ -18,7 +18,7 @@ class ActiveProjectsModel {
   // Создать новый проект
   static async createProject({ user_id, name, members_count, join_date, progress, deadline, description }) {
     const query = `
-      INSERT INTO public."ActiveProjects" (user_id, name, members_count, join_date, progress, deadline, description)
+      INSERT INTO public."activeprojects" (user_id, name, members_count, join_date, progress, deadline, description)
       VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING *;
     `;
@@ -29,7 +29,7 @@ class ActiveProjectsModel {
   // Обновить проект по ID
   static async updateProject(id, { user_id, name, members_count, join_date, progress, deadline, description }) {
     const query = `
-      UPDATE public."ActiveProjects"
+      UPDATE public."activeprojects"
       SET user_id = $1, name = $2, members_count = $3, join_date = $4, progress = $5, deadline = $6, description = $7
       WHERE project_id = $8
       RETURNING *;
@@ -40,7 +40,7 @@ class ActiveProjectsModel {
 
   // Удалить проект по ID
   static async deleteProject(id) {
-    const query = 'DELETE FROM public."ActiveProjects" WHERE project_id = $1 RETURNING *;';
+    const query = 'DELETE FROM public."activeprojects" WHERE project_id = $1 RETURNING *;';
     const { rows } = await pool.query(query, [id]);
     return rows[0];
   }

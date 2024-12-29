@@ -1,4 +1,5 @@
 const ColleagueModel = require('../models/colleaguesModel');
+const pool = require('../db/connection');
 
 // Получить всех коллег
 exports.getAllColleagues = async (req, res, next) => {

@@ -1,8 +1,9 @@
 const ActiveProjectsModel = require('../models/activeProjectModel');
+const pool = require('../db/connection');
 
 exports.getAllProjects = async (req, res, next) => {
   try {
-    const { rows } = await pool.query('SELECT * FROM public."ActiveProjects"');
+    const { rows } = await pool.query('SELECT * FROM public."activeprojects"');
     res.status(200).json(rows);
   } catch (error) {
     next(error); 
@@ -13,7 +14,7 @@ exports.getProjectById = async (req, res, next) => {
   const id = parseInt(req.params.id, 10);
 
   try {
-    const { rows } = await pool.query('SELECT * FROM public."ActiveProjects" WHERE project_id = $1', [id]);
+    const { rows } = await pool.query('SELECT * FROM public."activeprojects" WHERE project_id = $1', [id]);
     const project = rows[0];
 
     if (!project) {
@@ -31,7 +32,7 @@ exports.createProject = async (req, res, next) => {
 
   try {
     const query = `
-      INSERT INTO public."ActiveProjects" (user_id, name, members_count, join_date, progress, deadline, description)
+      INSERT INTO public."activeprojects" (user_id, name, members_count, join_date, progress, deadline, description)
       VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING *;
     `;
@@ -50,7 +51,7 @@ exports.updateProject = async (req, res, next) => {
 
   try {
     const query = `
-      UPDATE public."ActiveProjects"
+      UPDATE public."activeprojects"
       SET user_id = $1, name = $2, members_count = $3, join_date = $4, progress = $5, deadline = $6, description = $7
       WHERE project_id = $8
       RETURNING *;
@@ -72,7 +73,7 @@ exports.deleteProject = async (req, res, next) => {
   const id = parseInt(req.params.id, 10);
 
   try {
-    const query = 'DELETE FROM public."ActiveProjects" WHERE project_id = $1 RETURNING *;';
+    const query = 'DELETE FROM public."activeprojects" WHERE project_id = $1 RETURNING *;';
     const { rows } = await pool.query(query, [id]);
     const deletedProject = rows[0];
 
