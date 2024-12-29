@@ -44,6 +44,19 @@ class ActiveProjectsModel {
     const { rows } = await pool.query(query, [id]);
     return rows[0];
   }
+
+  // Получить все активные проекты по user_id
+  static async getAllActiveProjectsByUserId(userId) {
+    const query = 'SELECT * FROM public."activeprojects" WHERE user_id = $1';
+    try {
+      const { rows } = await pool.query(query, [userId]);
+      return rows;
+    } catch (error) {
+      console.error('Error fetching active projects by user ID:', error);
+      throw error;
+  } 
+  }
+
 }
 
 // Получить проекты, отсортированные по дате
@@ -59,5 +72,7 @@ exports.getProjectsSortedByName = async (order = 'ASC') => {
   const { rows } = await pool.query(query);
   return rows;
 };
+
+
 
 module.exports = ActiveProjectsModel;

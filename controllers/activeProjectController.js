@@ -110,3 +110,24 @@ exports.getProjectsSortedByName = async (req, res, next) => {
     next(error);
   }
 };
+
+// Получить все активные проекты по user_id
+exports.getAllActiveProjectsByUserId = async (req, res, next) => {
+  const userId = parseInt(req.params.userId, 10);
+
+  if (isNaN(userId)) {
+    return res.status(400).json({ message: 'Invalid user ID' });
+  }
+
+  try {
+    const projects = await ActiveProjectsModel.getAllActiveProjectsByUserId(userId);
+
+    if (!projects || projects.length === 0) {
+      return res.status(404).json({ message: 'No active projects found for this user' });
+    }
+
+    res.status(200).json(projects);
+  } catch (error) {
+    next(error);
+  }
+};
