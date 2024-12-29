@@ -51,5 +51,10 @@ const startServer = async () => {
   }
 };
 
-// Запуск сервера
-startServer();
+// Экспортируем `app` для тестов
+module.exports = app;
+
+// Запуск сервера только если файл запускается напрямую
+if (require.main === module) {
+  startServer();
+}
