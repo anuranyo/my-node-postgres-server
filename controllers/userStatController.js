@@ -4,7 +4,7 @@ const pool = require('../db/connection');
 // Получить всю статистику пользователей
 exports.getAllUserStats = async (req, res, next) => {
   try {
-    const { rows } = await pool.query('SELECT * FROM public."UserStats"');
+    const { rows } = await pool.query('SELECT * FROM public."userstats"');
     res.status(200).json(rows);
   } catch (error) {
     next(error);
@@ -16,7 +16,7 @@ exports.getUserStatById = async (req, res, next) => {
   const id = parseInt(req.params.id, 10);
 
   try {
-    const { rows } = await pool.query('SELECT * FROM public."UserStats" WHERE stats_id = $1', [id]);
+    const { rows } = await pool.query('SELECT * FROM public."userstats" WHERE stats_id = $1', [id]);
     const stat = rows[0];
 
     if (!stat) {
@@ -35,7 +35,7 @@ exports.createUserStat = async (req, res, next) => {
 
   try {
     const query = `
-      INSERT INTO public."UserStats" (user_id, tasks, friends_count, done_projects)
+      INSERT INTO public."userstats" (user_id, tasks, friends_count, done_projects)
       VALUES ($1, $2, $3, $4)
       RETURNING *;
     `;
@@ -55,7 +55,7 @@ exports.updateUserStat = async (req, res, next) => {
 
   try {
     const query = `
-      UPDATE public."UserStats"
+      UPDATE public."userstats"
       SET user_id = $1, tasks = $2, friends_count = $3, done_projects = $4
       WHERE stats_id = $5
       RETURNING *;
@@ -78,7 +78,7 @@ exports.deleteUserStat = async (req, res, next) => {
   const id = parseInt(req.params.id, 10);
 
   try {
-    const query = 'DELETE FROM public."UserStats" WHERE stats_id = $1 RETURNING *;';
+    const query = 'DELETE FROM public."userstats" WHERE stats_id = $1 RETURNING *;';
     const { rows } = await pool.query(query, [id]);
     const deletedStat = rows[0];
 
