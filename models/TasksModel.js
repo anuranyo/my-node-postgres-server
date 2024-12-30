@@ -16,27 +16,27 @@ class TasksModel {
   }
 
   // Создать новую задачу
-  static async createTask({ user_id, title, status }) {
+  static async createTask({ user_id, project_id, title, status }) {
     const query = `
-      INSERT INTO public."tasks" (user_id, title, status)
-      VALUES ($1, $2, $3)
+      INSERT INTO public."tasks" (user_id, project_id, title, status)
+      VALUES ($1, $2, $3, $4)
       RETURNING *;
     `;
-    const { rows } = await pool.query(query, [user_id, title, status]);
+    const { rows } = await pool.query(query, [user_id, project_id, title, status]);
     return rows[0];
-  }
+}
 
   // Обновить задачу по ID
-  static async updateTask(id, { user_id, title, status }) {
+  static async updateTask(id, { user_id, project_id, title, status }) {
     const query = `
       UPDATE public."tasks"
-      SET user_id = $1, title = $2, status = $3
-      WHERE task_id = $4
+      SET user_id = $1, project_id = $2, title = $3, status = $4
+      WHERE task_id = $5
       RETURNING *;
     `;
-    const { rows } = await pool.query(query, [user_id, title, status, id]);
+    const { rows } = await pool.query(query, [user_id, project_id, title, status, id]);
     return rows[0];
-  }
+}
 
   // Удалить задачу по ID
   static async deleteTask(id) {

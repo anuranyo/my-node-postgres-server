@@ -27,27 +27,27 @@ exports.getTaskById = async (req, res, next) => {
 
 // Создать новую задачу
 exports.createTask = async (req, res, next) => {
-  const { user_id, title, status } = req.body;
+  const { user_id, project_id, title, status } = req.body;
   try {
-    const newTask = await TasksModel.createTask({ user_id, title, status });
-    res.status(201).json(newTask);
+      const newTask = await TasksModel.createTask({ user_id, project_id, title, status });
+      res.status(201).json(newTask);
   } catch (error) {
-    next(error);
+      next(error);
   }
 };
 
 // Обновить задачу по ID
 exports.updateTask = async (req, res, next) => {
   const id = parseInt(req.params.id, 10);
-  const { user_id, title, status } = req.body;
+  const { user_id, project_id, title, status } = req.body;
   try {
-    const updatedTask = await TasksModel.updateTask(id, { user_id, title, status });
-    if (!updatedTask) {
-      return res.status(404).json({ message: 'Task not found' });
-    }
-    res.status(200).json(updatedTask);
+      const updatedTask = await TasksModel.updateTask(id, { user_id, project_id, title, status });
+      if (!updatedTask) {
+          return res.status(404).json({ message: 'Task not found' });
+      }
+      res.status(200).json(updatedTask);
   } catch (error) {
-    next(error);
+      next(error);
   }
 };
 
