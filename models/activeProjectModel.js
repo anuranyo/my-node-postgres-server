@@ -22,7 +22,7 @@ class ActiveProjectsModel {
       VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING *;
     `;
-    const { rows } = await pool.query(query, [user_id, name, members_count, join_date, progress, deadline, description]);
+    const { rows } = await pool.query(query, [name, members_count, join_date, progress, deadline, description, user_id]);
     return rows[0];
   }
 
