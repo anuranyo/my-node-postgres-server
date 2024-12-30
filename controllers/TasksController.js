@@ -126,6 +126,36 @@ exports.getAllTasksByUserId = async (req, res, next) => {
   }
 };
 
+exports.getAllTasksByUserIdAndProjectId = async (req, res, next) => {
+  const userId = parseInt(req.params.userId, 10);
+  const projectId = parseInt(req.params.projectId, 10);
+
+  // Проверка корректности параметров
+  if (isNaN(userId)) {
+    return res.status(400).json({ message: 'Invalid user ID' });
+  }
+
+  if (isNaN(projectId)) {
+    return res.status(400).json({ message: 'Invalid project ID' });
+  }
+
+  try {
+    // Вызов метода модели для получения задач
+    const tasks = await TasksModel.getAllTasksByUserIdAndProjectId(userId, projectId);
+
+    if (!tasks || tasks.length === 0) {
+      return res.status(404).json({ message: 'No tasks found for the specified user and project' });
+    }
+
+    // Успешный ответ
+    res.status(200).json(tasks);
+  } catch (error) {
+    console.error('Error fetching tasks:', error);
+    next(error); // Передача ошибки в обработчик ошибок
+  }
+};
+
+
 exports.getTasksByProjectId = async (req, res, next) => {
   const projectId = parseInt(req.params.projectId, 10);
 

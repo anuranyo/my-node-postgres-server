@@ -85,6 +85,22 @@ class TasksModel {
     }
   }
 
+  static async getAllTasksByUserIdAndProjectId(userId, projectId) {
+    const query = `
+      SELECT * 
+      FROM public."tasks" 
+      WHERE user_id = $1 AND project_id = $2
+    `;
+    try {
+      const { rows } = await pool.query(query, [userId, projectId]); // Параметризованный запрос
+      return rows;
+    } catch (error) {
+      console.error('Error fetching tasks by user ID and project ID:', error);
+      throw error;
+    }
+  }
+  
+
   static async getTasksByProjectId(projectId) {
     const query = `
       SELECT * 
