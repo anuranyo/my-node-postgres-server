@@ -66,7 +66,7 @@ static async getColleaguesByProjectId(projectId) {
   const query = `
     SELECT *
     FROM public."colleagues"
-    WHERE project_name = $1;
+    WHERE project_id = $1;
   `;
   try {
     const { rows } = await pool.query(query, [projectId]); // Параметризованный запрос
