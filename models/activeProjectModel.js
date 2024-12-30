@@ -18,7 +18,7 @@ class ActiveProjectsModel {
   // Создать новый проект
   static async createProject({name, members_count, join_date, progress, deadline, description }) {
     const query = `
-      INSERT INTO public."activeprojects" (name, members_count, join_date, progress, deadline, description)
+      INSERT INTO public."activeprojects" (name, members_count, join_date, progress, deadline, description, user_id)
       VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *;
     `;
