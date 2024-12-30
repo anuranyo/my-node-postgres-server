@@ -20,26 +20,28 @@ class UsersModel {
   }
 
   // Создать нового пользователя
-  static async createUser({ username, full_name, email, password, dob, address, city, postal_code, country, profile_image }) {
-    data.profile_image = data.profile_image ? Buffer.from(data.profile_image, 'base64') : null;
+  static async createUser({ username, full_name, email, password, dob, address, city, postal_code, country }) {
     const query = `
-      INSERT INTO public."Users" (username, full_name, email, password, dob, address, city, postal_code, country, profile_image)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      INSERT INTO public."Users" (username, full_name, email, password, dob, address, city, postal_code, country)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
       RETURNING *;
     `;
-    const { rows } = await pool.query(query, Object.values(data));
+    const values = [username, full_name, email, password, dob, address, city, postal_code, country];
+    const { rows } = await pool.query(query, values);
     return rows[0];
   }
 
-  // Обновить пользователя по ID
-  static async updateUser(id, { username, full_name, email, password, dob, address, city, postal_code, country, profile_image }) {
+  // Обновить пользователя
+  static async updateUser(id, { username, full_name, email, password, dob, address, city, postal_code, country }) {
     const query = `
       UPDATE public."Users"
-      SET username = $1, full_name = $2, email = $3, password = $4, dob = $5, address = $6, city = $7, postal_code = $8, country = $9, profile_image = $10
-      WHERE user_id = $11
+      SET username = $1, full_name = $2, email = $3, password = $4, dob = $5,
+          address = $6, city = $7, postal_code = $8, country = $9
+      WHERE user_id = $10
       RETURNING *;
     `;
-    const { rows } = await pool.query(query, [username, full_name, email, password, dob, address, city, postal_code, country, profile_image, id]);
+    const values = [username, full_name, email, password, dob, address, city, postal_code, country, id];
+    const { rows } = await pool.query(query, values);
     return rows[0];
   }
 

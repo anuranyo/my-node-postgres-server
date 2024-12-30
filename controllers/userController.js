@@ -32,30 +32,31 @@ exports.getUserById = async (req, res, next) => {
   }
 };
 
+// Создать нового пользователя
 exports.createUser = async (req, res, next) => {
-  const { username, full_name, email, password, dob, address, city, postal_code, country, profile_image } = req.body;
+  const { username, full_name, email, password, dob, address, city, postal_code, country } = req.body;
 
   try {
     // Хеширование пароля
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const query = `
-      INSERT INTO public."Users" (username, full_name, email, password, dob, address, city, postal_code, country, profile_image)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      INSERT INTO public."Users" (username, full_name, email, password, dob, address, city, postal_code, country)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
       RETURNING *;
     `;
-    const { rows } = await pool.query(query, [username, full_name, email, hashedPassword, dob, address, city, postal_code, country, Buffer.from(profile_image, 'base64')]);
-    const newUser = rows[0];
-
-    res.status(201).json(newUser);
+    const values = [username, full_name, email, hashedPassword, dob, address, city, postal_code, country];
+    const { rows } = await pool.query(query, values);
+    res.status(201).json(rows[0]);
   } catch (error) {
     next(error);
   }
 };
 
+// Обновить пользователя
 exports.updateUser = async (req, res, next) => {
   const id = parseInt(req.params.id, 10);
-  const { username, full_name, email, password, dob, address, city, postal_code, country, profile_image } = req.body;
+  const { username, full_name, email, password, dob, address, city, postal_code, country } = req.body;
 
   try {
     let hashedPassword = null;
@@ -67,18 +68,19 @@ exports.updateUser = async (req, res, next) => {
 
     const query = `
       UPDATE public."Users"
-      SET username = $1, full_name = $2, email = $3, password = COALESCE($4, password), dob = $5, address = $6, city = $7, postal_code = $8, country = $9, profile_image = $10
-      WHERE user_id = $11
+      SET username = $1, full_name = $2, email = $3, password = COALESCE($4, password),
+          dob = $5, address = $6, city = $7, postal_code = $8, country = $9
+      WHERE user_id = $10
       RETURNING *;
     `;
-    const { rows } = await pool.query(query, [username, full_name, email, hashedPassword, dob, address, city, postal_code, country, profile_image ? Buffer.from(profile_image, 'base64') : null, id]);
-    const updatedUser = rows[0];
+    const values = [username, full_name, email, hashedPassword, dob, address, city, postal_code, country, id];
+    const { rows } = await pool.query(query, values);
 
-    if (!updatedUser) {
+    if (!rows[0]) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    res.status(204).send();
+    res.status(200).json(rows[0]);
   } catch (error) {
     next(error);
   }
