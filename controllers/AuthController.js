@@ -4,9 +4,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-// Регистрация пользователя
 exports.register = async (req, res, next) => {
-  const { username, email, password, country, profile_image } = req.body;
+  const { username, full_name, email, password, dob, address, city, postal_code, country, profile_image } = req.body;
 
   try {
     // Проверка, существует ли пользователь
@@ -20,11 +19,11 @@ exports.register = async (req, res, next) => {
 
     // Создание пользователя
     const query = `
-      INSERT INTO public."Users" (username, email, password, country, profile_image)
-      VALUES ($1, $2, $3, $4, $5)
-      RETURNING user_id, username, email, country, profile_image;
+      INSERT INTO public."Users" (username, full_name, email, password, dob, address, city, postal_code, country, profile_image)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      RETURNING user_id, username, email, full_name, dob, address, city, postal_code, country, profile_image;
     `;
-    const values = [username, email, hashedPassword, country, profile_image];
+    const values = [username, full_name, email, hashedPassword, dob, address, city, postal_code, country, profile_image];
     const { rows } = await pool.query(query, values);
 
     res.status(201).json({ message: 'User registered successfully.', user: rows[0] });
@@ -32,6 +31,7 @@ exports.register = async (req, res, next) => {
     next(error);
   }
 };
+
 
 // Авторизация пользователя
 exports.login = async (req, res, next) => {
