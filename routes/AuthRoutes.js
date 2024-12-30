@@ -16,7 +16,6 @@ router.post(
     body('city').optional().isString().withMessage('City must be a string'),
     body('postal_code').optional().isString().withMessage('Postal code must be a string'),
     body('country').optional().isString().withMessage('Country must be a string'),
-    body('profile_image').optional().isString().withMessage('Profile image must be a string (Base64)')
   ],
   register
 );
