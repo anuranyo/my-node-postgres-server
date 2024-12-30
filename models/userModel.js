@@ -12,17 +12,22 @@ class UsersModel {
   static async getUserById(id) {
     const query = 'SELECT * FROM public."Users" WHERE user_id = $1';
     const { rows } = await pool.query(query, [id]);
-    return rows[0];
+    const user = rows[0];
+    if (user && user.profile_image) {
+      user.profile_image = user.profile_image.toString('base64');
+    }
+    return user;
   }
 
   // Создать нового пользователя
   static async createUser({ username, full_name, email, password, dob, address, city, postal_code, country, profile_image }) {
+    data.profile_image = data.profile_image ? Buffer.from(data.profile_image, 'base64') : null;
     const query = `
       INSERT INTO public."Users" (username, full_name, email, password, dob, address, city, postal_code, country, profile_image)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
       RETURNING *;
     `;
-    const { rows } = await pool.query(query, [username, full_name, email, password, dob, address, city, postal_code, country, profile_image]);
+    const { rows } = await pool.query(query, Object.values(data));
     return rows[0];
   }
 

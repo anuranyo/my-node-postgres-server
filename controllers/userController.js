@@ -22,6 +22,10 @@ exports.getUserById = async (req, res, next) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
+    if (user.profile_image) {
+      user.profile_image = user.profile_image.toString('base64');
+    }
+
     res.status(200).json(user);
   } catch (error) {
     next(error);
@@ -40,7 +44,7 @@ exports.createUser = async (req, res, next) => {
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
       RETURNING *;
     `;
-    const { rows } = await pool.query(query, [username, full_name, email, hashedPassword, dob, address, city, postal_code, country, profile_image]);
+    const { rows } = await pool.query(query, [username, full_name, email, hashedPassword, dob, address, city, postal_code, country, Buffer.from(profile_image, 'base64')]);
     const newUser = rows[0];
 
     res.status(201).json(newUser);
@@ -67,7 +71,7 @@ exports.updateUser = async (req, res, next) => {
       WHERE user_id = $11
       RETURNING *;
     `;
-    const { rows } = await pool.query(query, [username, full_name, email, hashedPassword, dob, address, city, postal_code, country, profile_image, id]);
+    const { rows } = await pool.query(query, [username, full_name, email, hashedPassword, dob, address, city, postal_code, country, profile_image ? Buffer.from(profile_image, 'base64') : null, id]);
     const updatedUser = rows[0];
 
     if (!updatedUser) {
