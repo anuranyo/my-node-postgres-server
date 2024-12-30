@@ -44,6 +44,27 @@ class LinksModel {
     const { rows } = await pool.query(query, [id]);
     return rows[0];
   }
+
+  static async getInfoForView(jobId) {
+    const query = `
+      SELECT 
+        l.*,
+        u.username,
+        t.tag_name
+      FROM 
+        public.links l
+      INNER JOIN 
+        public."Users" u ON l.user_id = u.user_id
+      INNER JOIN 
+        public.usertags ut ON u.user_id = ut.user_id
+      INNER JOIN 
+        public.tags t ON ut.tag_id = t.tag_id
+      WHERE 
+        l.job_id = $1;
+    `;
+    const { rows } = await pool.query(query, [jobId]);
+    return rows;
+  }
 }
 
 module.exports = LinksModel;

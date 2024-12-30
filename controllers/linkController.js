@@ -64,3 +64,16 @@ exports.deleteLink = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getInfoForView = async (req, res, next) => {
+  const jobId = parseInt(req.params.jobId, 10);
+  try {
+    const data = await LinksModel.getInfoForView(jobId);
+    if (data.length === 0) {
+      return res.status(404).json({ message: 'No data found for the specified job_id' });
+    }
+    res.status(200).json(data);
+  } catch (error) {
+    next(error);
+  }
+};

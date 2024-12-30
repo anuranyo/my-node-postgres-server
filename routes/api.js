@@ -1,6 +1,6 @@
 const express = require('express');
 const { getAllUsers, getUserById, createUser, updateUser, deleteUser } = require('../controllers/userController');
-const { getAllLinks, getLinkById, createLink, updateLink, deleteLink } = require('../controllers/linkController');
+const { getAllLinks, getLinkById, createLink, updateLink, deleteLink, getInfoForView } = require('../controllers/linkController');
 const { getAllTasks, getTaskById, createTask, updateTask, deleteTask, getTasksSortedByDeadline, getTasksSortedByStatus, getAllTasksByID, getAllTasksByUserId, getTasksByProjectId } = require('../controllers/TasksController');
 const { getAllJobs, getJobById, createJob, updateJob, deleteJob } = require('../controllers/JobsController');
 const { getAllProjects, getProjectById, createProject, updateProject, deleteProject, getProjectsSortedByDate, getProjectsSortedByName, getAllActiveProjectsByUserId } = require('../controllers/activeProjectController');
@@ -45,6 +45,7 @@ router.get('/getLinkById/:id', getLinkById);
 router.post('/createLink', createLink);
 router.put('/updateLink/:id', updateLink);
 router.delete('/deleteLink/:id', deleteLink);
+router.get('/getInfoForView/:jobId', getInfoForView);
 
 // JOBS ROUTES
 router.get('/getAllJobs/', getAllJobs);
