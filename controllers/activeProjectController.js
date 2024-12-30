@@ -28,7 +28,7 @@ exports.getProjectById = async (req, res, next) => {
 };
 
 exports.createProject = async (req, res, next) => {
-  const { user_id, name, members_count, join_date, progress, deadline, description } = req.body;
+  const { userId, name, members_count, join_date, progress, deadline, description } = req.body;
 
   try {
     const query = `
