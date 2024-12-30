@@ -125,3 +125,23 @@ exports.getAllTasksByUserId = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getTasksByProjectId = async (req, res, next) => {
+  const projectId = parseInt(req.params.projectId, 10);
+
+  if (isNaN(projectId)) {
+      return res.status(400).json({ message: 'Invalid project ID' });
+  }
+
+  try {
+      const tasks = await TasksModel.getTasksByProjectId(projectId);
+
+      if (!tasks || tasks.length === 0) {
+          return res.status(404).json({ message: 'No tasks found for this project' });
+      }
+
+      res.status(200).json(tasks);
+  } catch (error) {
+      next(error);
+  }
+};

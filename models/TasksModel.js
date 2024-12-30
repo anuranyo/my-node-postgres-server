@@ -84,6 +84,21 @@ class TasksModel {
       throw error;
     }
   }
+
+  static async getTasksByProjectId(projectId) {
+    const query = `
+      SELECT * 
+      FROM public."tasks" 
+      WHERE project_id = $1;
+    `;
+    try {
+        const { rows } = await pool.query(query, [projectId]);
+        return rows; // Возвращаем массив задач
+    } catch (error) {
+        console.error('Error fetching tasks by project ID:', error);
+        throw error;
+    }
+  }
 }
 
 
