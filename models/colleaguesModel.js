@@ -61,6 +61,22 @@ static async getColleaguesByUserId(userId) {
   }
 }
 
+// Получить всех коллег по project_id
+static async getColleaguesByProjectId(projectId) {
+  const query = `
+    SELECT *
+    FROM public."colleagues"
+    WHERE project_name = $1;
+  `;
+  try {
+    const { rows } = await pool.query(query, [projectId]); // Параметризованный запрос
+    return rows; // Возвращаем массив коллег
+  } catch (error) {
+    console.error('Error fetching colleagues by project ID:', error);
+    throw error;
+  }
+}
+
 }
 
 module.exports = ColleaguesModel;

@@ -113,3 +113,23 @@ exports.getColleaguesByUserId = async (req, res, next) => {
   }
 };
 
+// Получить всех коллег по project_id
+exports.getColleaguesByProjectId = async (req, res, next) => {
+  const projectId = req.params.projectId;
+
+  if (!projectId) {
+    return res.status(400).json({ message: 'Project ID is required' });
+  }
+
+  try {
+    const colleagues = await ColleagueModel.getColleaguesByProjectId(projectId);
+
+    if (colleagues.length === 0) {
+      return res.status(404).json({ message: 'No colleagues found for this project' });
+    }
+
+    res.status(200).json(colleagues);
+  } catch (error) {
+    next(error);
+  }
+};

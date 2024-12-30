@@ -6,7 +6,7 @@ const { getAllJobs, getJobById, createJob, updateJob, deleteJob } = require('../
 const { getAllProjects, getProjectById, createProject, updateProject, deleteProject, getProjectsSortedByDate, getProjectsSortedByName, getAllActiveProjectsByUserId } = require('../controllers/activeProjectController');
 const { getAllRequests, getRequestById, createRequest, updateRequest, deleteRequest, getAllRequestsByUserId } = require('../controllers/requestController');
 const { getAllUserContactInfos, getUserContactInfoById, createUserContactInfo, updateUserContactInfo, deleteUserContactInfo, getAllUserContactInfosByUserId  } = require('../controllers/userContactInfoController');
-const { getAllColleagues, getColleagueById, createColleague, updateColleague, deleteColleague, getColleaguesByUserId } = require('../controllers/colleaguesController');
+const { getAllColleagues, getColleagueById, createColleague, updateColleague, deleteColleague, getColleaguesByUserId, getColleaguesByProjectId } = require('../controllers/colleaguesController');
 const { getAllUserStats, getUserStatById, createUserStat, updateUserStat, deleteUserStat, getStatsByUserId } = require('../controllers/userStatController');
 const { getAllUserTaskSummaries, getUserTaskSummaryById, createUserTaskSummary, updateUserTaskSummary, deleteUserTaskSummary, getAllUserTaskSummariesByUserId } = require('../controllers/userTaskSummaryController');
 const { getAllTags, getTagById, createTag, updateTag, deleteTag } = require('../controllers/tagsController');
@@ -89,6 +89,7 @@ router.post('/createColleague/', createColleague);
 router.put('/updateColleague/:id', updateColleague);
 router.delete('/deleteColleague/:id', deleteColleague);
 router.get('/getColleaguesByUserId/:userId', getColleaguesByUserId);
+router.get('/getColleaguesByProjectId/:projectId', getColleaguesByProjectId);
 
 //USER STAT ROUTES
 router.get('/getAllUserStats', getAllUserStats);
