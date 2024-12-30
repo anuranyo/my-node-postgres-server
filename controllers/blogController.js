@@ -34,7 +34,6 @@ exports.getBlogById = async (req, res, next) => {
   }
 };
 
-// Создать новый блог
 exports.createBlog = async (req, res, next) => {
   const { image, title, description, author, date, avatar, favorite } = req.body;
 
@@ -44,17 +43,21 @@ exports.createBlog = async (req, res, next) => {
       VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING *;
     `;
-    const { rows } = await pool.query(query, [      image ? Buffer.from(image, 'base64') : null,
-      title, description, author, date, avatar, favorite]);
-    const newBlog = rows[0];
-
-    res.status(201).json(newBlog);
+    const { rows } = await pool.query(query, [
+      image ? Buffer.from(image, 'base64') : null,
+      title,
+      description,
+      author,
+      date,
+      avatar ? Buffer.from(avatar, 'base64') : null,
+      favorite
+    ]);
+    res.status(201).json(rows[0]);
   } catch (error) {
     next(error);
   }
 };
 
-// Обновить блог по ID
 exports.updateBlog = async (req, res, next) => {
   const id = parseInt(req.params.id, 10);
   const { image, title, description, author, date, avatar, favorite } = req.body;
@@ -66,15 +69,21 @@ exports.updateBlog = async (req, res, next) => {
       WHERE blog_id = $8
       RETURNING *;
     `;
-    const { rows } = await pool.query(query, [      image ? Buffer.from(image, 'base64') : null, // Преобразуем Base64 в двоичный формат
-       title, description, author, date, avatar, favorite, id]);
-    const updatedBlog = rows[0];
+    const { rows } = await pool.query(query, [
+      image ? Buffer.from(image, 'base64') : null,
+      title,
+      description,
+      author,
+      date,
+      avatar ? Buffer.from(avatar, 'base64') : null,
+      favorite,
+      id
+    ]);
 
-    if (!updatedBlog) {
+    if (!rows[0]) {
       return res.status(404).json({ message: 'Blog not found' });
     }
-
-    res.status(204).send(); // No Content
+    res.status(200).json(rows[0]);
   } catch (error) {
     next(error);
   }

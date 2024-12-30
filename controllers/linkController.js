@@ -27,9 +27,9 @@ exports.getLinkById = async (req, res, next) => {
 
 // Создать новую ссылку
 exports.createLink = async (req, res, next) => {
-  const { user_id, name, icon, url } = req.body;
+  const { user_id, name, icon, url, job_id, full_description } = req.body;
   try {
-    const newLink = await LinksModel.createLink({ user_id, name, icon, url });
+    const newLink = await LinksModel.createLink({ user_id, name, icon, url, job_id, full_description });
     res.status(201).json(newLink);
   } catch (error) {
     next(error);
@@ -39,9 +39,9 @@ exports.createLink = async (req, res, next) => {
 // Обновить ссылку по ID
 exports.updateLink = async (req, res, next) => {
   const id = parseInt(req.params.id, 10);
-  const { user_id, name, icon, url } = req.body;
+  const { user_id, name, icon, url, job_id, full_description } = req.body;
   try {
-    const updatedLink = await LinksModel.updateLink(id, { user_id, name, icon, url });
+    const updatedLink = await LinksModel.updateLink(id, { user_id, name, icon, url, job_id, full_description });
     if (!updatedLink) {
       return res.status(404).json({ message: 'Link not found' });
     }
@@ -60,6 +60,19 @@ exports.deleteLink = async (req, res, next) => {
       return res.status(404).json({ message: 'Link not found' });
     }
     res.status(204).send();
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getInfoForView = async (req, res, next) => {
+  const jobId = parseInt(req.params.jobId, 10);
+  try {
+    const data = await LinksModel.getInfoForView(jobId);
+    if (data.length === 0) {
+      return res.status(404).json({ message: 'No data found for the specified job_id' });
+    }
+    res.status(200).json(data);
   } catch (error) {
     next(error);
   }

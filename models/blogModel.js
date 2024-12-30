@@ -13,8 +13,9 @@ class BlogModel {
     const query = 'SELECT * FROM public."blogs" WHERE blog_id = $1';
     const { rows } = await pool.query(query, [id]);
     const blog = rows[0];
-    if (blog && blog.image) {
-      blog.image = blog.image.toString('base64');
+    if (blog) {
+      if (blog.image) blog.image = blog.image.toString('base64');
+      if (blog.avatar) blog.avatar = blog.avatar.toString('base64');
     }
     return blog;
   }
@@ -26,7 +27,15 @@ class BlogModel {
       VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING *;
     `;
-    const { rows } = await pool.query(query, [    image ? Buffer.from(image, 'base64') : null, title, description, author, date, avatar, favorite]);
+    const { rows } = await pool.query(query, [
+      image ? Buffer.from(image, 'base64') : null,
+      title,
+      description,
+      author,
+      date,
+      avatar ? Buffer.from(avatar, 'base64') : null,
+      favorite
+    ]);
     return rows[0];
   }
 
@@ -38,7 +47,16 @@ class BlogModel {
       WHERE blog_id = $8
       RETURNING *;
     `;
-    const { rows } = await pool.query(query, [image, title, description, author, date, avatar, favorite, id]);
+    const { rows } = await pool.query(query, [
+      image ? Buffer.from(image, 'base64') : null,
+      title,
+      description,
+      author,
+      date,
+      avatar ? Buffer.from(avatar, 'base64') : null,
+      favorite,
+      id
+    ]);
     return rows[0];
   }
 

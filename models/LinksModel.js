@@ -16,25 +16,25 @@ class LinksModel {
   }
 
   // Создать новую ссылку
-  static async createLink({ user_id, name, icon, url }) {
+  static async createLink({ user_id, name, icon, url, job_id, full_description }) {
     const query = `
-      INSERT INTO public."links" (user_id, name, icon, url)
-      VALUES ($1, $2, $3, $4)
+      INSERT INTO public."links" (user_id, name, icon, url, job_id, full_description)
+      VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *;
     `;
-    const { rows } = await pool.query(query, [user_id, name, icon, url]);
+    const { rows } = await pool.query(query, [user_id, name, icon, url, job_id, full_description]);
     return rows[0];
   }
 
   // Обновить ссылку по ID
-  static async updateLink(id, { user_id, name, icon, url }) {
+  static async updateLink(id, { user_id, name, icon, url, job_id, full_description }) {
     const query = `
       UPDATE public."links"
-      SET user_id = $1, name = $2, icon = $3, url = $4
-      WHERE link_id = $5
+      SET user_id = $1, name = $2, icon = $3, url = $4, job_id = $5, full_description = $6
+      WHERE link_id = $7
       RETURNING *;
     `;
-    const { rows } = await pool.query(query, [user_id, name, icon, url, id]);
+    const { rows } = await pool.query(query, [user_id, name, icon, url, job_id, full_description, id]);
     return rows[0];
   }
 
@@ -43,6 +43,27 @@ class LinksModel {
     const query = 'DELETE FROM public."links" WHERE link_id = $1 RETURNING *;';
     const { rows } = await pool.query(query, [id]);
     return rows[0];
+  }
+
+  static async getInfoForView(jobId) {
+    const query = `
+      SELECT 
+        l.*,
+        u.username,
+        t.tag_name
+      FROM 
+        public.links l
+      INNER JOIN 
+        public."Users" u ON l.user_id = u.user_id
+      INNER JOIN 
+        public.usertags ut ON u.user_id = ut.user_id
+      INNER JOIN 
+        public.tags t ON ut.tag_id = t.tag_id
+      WHERE 
+        l.job_id = $1;
+    `;
+    const { rows } = await pool.query(query, [jobId]);
+    return rows;
   }
 }
 
