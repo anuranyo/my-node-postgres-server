@@ -32,11 +32,11 @@ exports.createProject = async (req, res, next) => {
 
   try {
     const query = `
-      INSERT INTO public."activeprojects" (name, members_count, join_date, progress, deadline, description)
+      INSERT INTO public."activeprojects" (name, members_count, join_date, progress, deadline, description, user_id)
       VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *;
     `;
-    const { rows } = await pool.query(query, [name, members_count, join_date, progress, deadline, description]);
+    const { rows } = await pool.query(query, [name, members_count, join_date, progress, deadline, description, user_id]);
     const newProject = rows[0];
 
     res.status(201).json(newProject);
